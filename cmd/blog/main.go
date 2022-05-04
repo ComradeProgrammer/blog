@@ -1,7 +1,11 @@
 package main
 
-import "github.com/ComradeProgrammer/blog/internal/blog/router"
+import (
+	"github.com/ComradeProgrammer/blog/internal/blog/model"
+	"github.com/ComradeProgrammer/blog/internal/blog/router"
+)
 
 func main() {
-	router.StartBackendServer()
+	model.InitDatabase("database.sqlite")
+	router.GetGinEngine().Run()
 }

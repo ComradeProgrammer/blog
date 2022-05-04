@@ -6,8 +6,8 @@ import (
 	"github.com/ComradeProgrammer/blog/internal/blog/controller"
 )
 
-func StartBackendServer() {
+func GetGinEngine() *gin.Engine {
 	r := gin.Default()
 	r.GET("/ping", controller.Ping)
-	r.Run()
+	return r
 }
