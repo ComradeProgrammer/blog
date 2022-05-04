@@ -1,6 +1,8 @@
 package model
 
-import "time"
+import (
+	"time"
+)
 
 type Blog struct {
 	ID       int       `gorm:"id;primaryKey;autoIncrement"`

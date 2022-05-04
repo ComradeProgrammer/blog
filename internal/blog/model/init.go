@@ -7,6 +7,12 @@ import (
 
 var database *gorm.DB
 
+var WatchList = []any{
+	&Blog{},
+	&Category{},
+	&User{},
+}
+
 func InitDatabase(databaseName string) {
 	var err error
 	database, err = gorm.Open(sqlite.Open(databaseName), &gorm.Config{})
@@ -16,11 +22,14 @@ func InitDatabase(databaseName string) {
 	//enable foreign key check
 	database.Exec("PRAGMA foreign_keys = ON;")
 
-	database.AutoMigrate(&Blog{})
-	database.AutoMigrate(&Category{})
+	for _, i := range WatchList {
+		database.AutoMigrate(i)
+	}
 }
 
 func ClearDatabase() {
-	database.Where("1 = 1").Delete(&Blog{})
-	database.Where("1 = 1").Delete(&Category{})
+	//if we do not se 1=1 conditon, gorm will reject delete operation with no conditions
+	for _, i := range WatchList {
+		database.Where("1 = 1").Delete(i)
+	}
 }
