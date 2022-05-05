@@ -1,6 +1,8 @@
 package model
 
 import (
+	"log"
+
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
@@ -13,7 +15,7 @@ var WatchList = []any{
 	&User{},
 }
 
-func InitDatabase(databaseName string) {
+func ConnectDatabase(databaseName string) {
 	var err error
 	database, err = gorm.Open(sqlite.Open(databaseName), &gorm.Config{})
 	if err != nil {
@@ -24,6 +26,25 @@ func InitDatabase(databaseName string) {
 
 	for _, i := range WatchList {
 		database.AutoMigrate(i)
+	}
+
+}
+
+func InitDatabase() {
+	//insert the default admin account
+
+	adminUser, err := GetUserByUserName("admin")
+
+	if err == gorm.ErrRecordNotFound {
+		adminUser = &User{
+			UserName: "admin",
+			IsAdmin:  true,
+		}
+		adminUser.SetPassword("123456")
+		err = CreateUser(adminUser)
+		if err != nil {
+			log.Println("Unable to create admin account")
+		}
 	}
 }
 

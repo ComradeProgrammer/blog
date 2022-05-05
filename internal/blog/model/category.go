@@ -30,7 +30,7 @@ func GetCategory(ID int) (*Category, error) {
 	category := Category{
 		ID: ID,
 	}
-	result := database.Preload("Blogs").Find(&category)
+	result := database.Preload("Blogs").First(&category)
 	if result.Error != nil {
 		return nil, result.Error
 	}
@@ -46,7 +46,7 @@ func CreateCategory(c *Category) error {
 }
 
 func (c *Category) Update() error {
-	result := database.Save(c)
+	result := database.Select("name", "description").Updates(c)
 	if result.Error != nil {
 		return result.Error
 	}

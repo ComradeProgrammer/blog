@@ -28,7 +28,7 @@ func GetBlog(ID int) (*Blog, error) {
 	blog := Blog{
 		ID: ID,
 	}
-	result := database.Preload("Category").Find(&blog)
+	result := database.Preload("Category").First(&blog)
 	if result.Error != nil {
 		return nil, result.Error
 	}
@@ -44,7 +44,7 @@ func CreateBlog(b *Blog) error {
 }
 
 func (b *Blog) Update() error {
-	result := database.Save(b)
+	result := database.Select("title", "content", "category_id").Save(b)
 	if result.Error != nil {
 		return result.Error
 	}

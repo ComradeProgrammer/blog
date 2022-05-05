@@ -2,15 +2,18 @@ package model
 
 import (
 	"fmt"
+	"time"
 
 	"golang.org/x/crypto/bcrypt"
 )
 
 type User struct {
-	ID                int    `gorm:"id;primaryKey;autoIncrement"`
-	UserName          string `gorm:"user_name;unique"`
-	PasswordEncrypted []byte `gorm:"password_encrypted"`
-	IsAdmin           bool   `gorm:"is_admin"`
+	ID                int       `gorm:"id;primaryKey;autoIncrement"`
+	UserName          string    `gorm:"user_name;unique"`
+	PasswordEncrypted []byte    `gorm:"password_encrypted"`
+	IsAdmin           bool      `gorm:"is_admin"`
+	CreateAt          time.Time `gorm:"create_at;autoCreateTime"`
+	UpdateAt          time.Time `gorm:"update_at;autoUpdateTime"`
 }
 
 func GetUsers() ([]*User, error) {
@@ -26,7 +29,7 @@ func GetUserByID(ID int) (*User, error) {
 	user := User{
 		ID: ID,
 	}
-	result := database.Find(&user)
+	result := database.First(&user)
 	if result.Error != nil {
 		return nil, result.Error
 	}
@@ -37,7 +40,7 @@ func GetUserByUserName(userName string) (*User, error) {
 	user := User{
 		UserName: userName,
 	}
-	result := database.Find(&user)
+	result := database.First(&user)
 	if result.Error != nil {
 		return nil, result.Error
 	}
@@ -53,7 +56,7 @@ func CreateUser(user *User) error {
 }
 
 func (u *User) Update() error {
-	result := database.Save(u)
+	result := database.Select("user_name", "password_encrypted", "is_admin").Updates(u)
 	if result.Error != nil {
 		return result.Error
 	}

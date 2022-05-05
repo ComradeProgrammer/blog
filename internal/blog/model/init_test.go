@@ -5,7 +5,7 @@ import (
 )
 
 func TestMain(m *testing.M) {
-	InitDatabase("database_test.sqlite")
+	ConnectDatabase("database_test.sqlite")
 	ClearDatabase()
 	m.Run()
 }
