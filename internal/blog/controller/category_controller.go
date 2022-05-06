@@ -2,12 +2,13 @@ package controller
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"strconv"
 
-
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 
 	"github.com/ComradeProgrammer/blog/internal/blog/model"
 )
@@ -33,7 +34,11 @@ func GetCategory(c *gin.Context) {
 	}
 	category, err := model.GetCategory(id)
 	if err != nil {
-		c.JSON(400, gin.H{
+		code := 400
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			code = 404
+		}
+		c.JSON(code, gin.H{
 			"error": err.Error(),
 		})
 		return
@@ -42,7 +47,7 @@ func GetCategory(c *gin.Context) {
 }
 
 func PostCategory(c *gin.Context) {
-	if ok:=authenticateAdmin(c);!ok{
+	if ok := authenticateAdmin(c); !ok {
 		c.JSON(401, gin.H{
 			"error": "not authorized",
 		})
@@ -73,7 +78,7 @@ func PostCategory(c *gin.Context) {
 
 	err = model.CreateCategory(&category)
 	if err != nil {
-		c.JSON(500, gin.H{
+		c.JSON(400, gin.H{
 			"error": err.Error(),
 		})
 		return
@@ -84,7 +89,7 @@ func PostCategory(c *gin.Context) {
 }
 
 func PutCategory(c *gin.Context) {
-	if ok:=authenticateAdmin(c);!ok{
+	if ok := authenticateAdmin(c); !ok {
 		c.JSON(401, gin.H{
 			"error": "not authorized",
 		})
@@ -123,7 +128,11 @@ func PutCategory(c *gin.Context) {
 
 	err = category.Update()
 	if err != nil {
-		c.JSON(400, gin.H{
+		code := 400
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			code = 404
+		}
+		c.JSON(code, gin.H{
 			"error": err.Error(),
 		})
 		return
@@ -134,7 +143,7 @@ func PutCategory(c *gin.Context) {
 }
 
 func DeleteCategory(c *gin.Context) {
-	if ok:=authenticateAdmin(c);!ok{
+	if ok := authenticateAdmin(c); !ok {
 		c.JSON(401, gin.H{
 			"error": "not authorized",
 		})
@@ -152,7 +161,11 @@ func DeleteCategory(c *gin.Context) {
 	}
 	err = category.Delete()
 	if err != nil {
-		c.JSON(400, gin.H{
+		code := 400
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			code = 404
+		}
+		c.JSON(code, gin.H{
 			"error": err.Error(),
 		})
 		return

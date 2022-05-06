@@ -2,6 +2,8 @@ package model
 
 import (
 	"time"
+
+	"gorm.io/gorm"
 )
 
 type Category struct {
@@ -17,7 +19,7 @@ type Category struct {
 //No preload blogs
 func GetCategories() ([]*Category, error) {
 	var res []*Category
-	result := database.Find(&res)
+	result := database.Order("create_at desc").Find(&res)
 	if result.Error != nil {
 		return nil, result.Error
 	}
@@ -30,7 +32,9 @@ func GetCategory(ID int) (*Category, error) {
 	category := Category{
 		ID: ID,
 	}
-	result := database.Preload("Blogs").First(&category)
+	result := database.Preload("Blogs", func(db *gorm.DB) *gorm.DB {
+		return db.Order("blogs.create_at desc")
+	}).First(&category)
 	if result.Error != nil {
 		return nil, result.Error
 	}
@@ -46,9 +50,12 @@ func CreateCategory(c *Category) error {
 }
 
 func (c *Category) Update() error {
-	result := database.Select("name", "description").Updates(c)
+	result := database.Where("id =  ?", c.ID).Select("name", "description").Updates(c)
 	if result.Error != nil {
 		return result.Error
+	}
+	if result.RowsAffected==0{
+		return gorm.ErrRecordNotFound
 	}
 	return nil
 }
@@ -57,6 +64,9 @@ func (c *Category) Delete() error {
 	result := database.Delete(c)
 	if result.Error != nil {
 		return result.Error
+	}
+	if result.RowsAffected==0{
+		return gorm.ErrRecordNotFound
 	}
 	return nil
 }

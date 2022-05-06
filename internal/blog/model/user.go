@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"golang.org/x/crypto/bcrypt"
+	"gorm.io/gorm"
 )
 
 type User struct {
@@ -37,10 +38,8 @@ func GetUserByID(ID int) (*User, error) {
 }
 
 func GetUserByUserName(userName string) (*User, error) {
-	user := User{
-		UserName: userName,
-	}
-	result := database.First(&user)
+	user := User{}
+	result := database.Where("user_name = ?", userName).First(&user)
 	if result.Error != nil {
 		return nil, result.Error
 	}
@@ -56,9 +55,12 @@ func CreateUser(user *User) error {
 }
 
 func (u *User) Update() error {
-	result := database.Select("user_name", "password_encrypted", "is_admin").Updates(u)
+	result := database.Where("id =  ?", u.ID).Select("user_name", "password_encrypted", "is_admin").Updates(u)
 	if result.Error != nil {
 		return result.Error
+	}
+	if result.RowsAffected == 0 {
+		return gorm.ErrRecordNotFound
 	}
 	return nil
 }
@@ -67,6 +69,9 @@ func (u *User) Delete() error {
 	result := database.Delete(u)
 	if result.Error != nil {
 		return result.Error
+	}
+	if result.RowsAffected == 0 {
+		return gorm.ErrRecordNotFound
 	}
 	return nil
 }

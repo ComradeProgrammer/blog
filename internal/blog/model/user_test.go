@@ -36,6 +36,12 @@ func TestUserBasic(t *testing.T) {
 		So(err, ShouldBeNil)
 
 		//test get
+		userCopy2, err := GetUserByUserName("abc@qq.com")
+		So(err, ShouldBeNil)
+		So(userCopy2, ShouldNotBeNil)
+		So(user.UserName,ShouldEqual,userCopy2.UserName)
+		So(user.IsAdmin,ShouldEqual,userCopy2.IsAdmin)
+
 		userCopy1, err := GetUserByID(user.ID)
 		So(err, ShouldBeNil)
 		So(userCopy1, ShouldNotBeNil)
@@ -44,11 +50,7 @@ func TestUserBasic(t *testing.T) {
 		So(userCopy1.VerifyPassword("password"), ShouldBeTrue)
 		So(userCopy1.VerifyPassword("passwdord"), ShouldBeFalse)
 
-		userCopy2, err := GetUserByUserName(user.UserName)
-		So(err, ShouldBeNil)
-		So(userCopy2, ShouldNotBeNil)
-		So(user.UserName,ShouldEqual,userCopy2.UserName)
-		So(user.IsAdmin,ShouldEqual,userCopy2.IsAdmin)
+		
 		users, err := GetUsers()
 		So(err, ShouldBeNil)
 		So(len(users), ShouldEqual, 1)
