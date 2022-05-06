@@ -6,17 +6,15 @@ import (
 	"testing"
 
 	. "github.com/smartystreets/goconvey/convey"
-
 )
 
-
-func TestPing(t *testing.T ){
+func TestPing(t *testing.T) {
 	restoreTestDatabase()
-	r:=GetGinEngine()
+	r := GetGinEngine()
 	Convey("TestPingBasic", t, func() {
 		w := httptest.NewRecorder()
 		req, _ := http.NewRequest("GET", "/ping", nil)
 		r.ServeHTTP(w, req)
-		So(w.Code,ShouldEqual,200)
+		So(w.Code, ShouldEqual, 200)
 	})
 }

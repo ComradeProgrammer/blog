@@ -38,7 +38,6 @@ func TestGetCategories(t *testing.T) {
 }
 
 func TestGetCategory(t *testing.T) {
-
 	restoreTestDatabase()
 	r := GetGinEngine()
 	Convey("TestGetCategory", t, func() {
@@ -79,7 +78,8 @@ func TestPostCategory(t *testing.T) {
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 401)
 	})
-	Convey("TestGetCategory", t, func() {
+
+	Convey("TestPostCategory", t, func() {
 		w := httptest.NewRecorder()
 		cookie := getAdminCookie(r)
 
@@ -109,6 +109,7 @@ func TestPostCategory(t *testing.T) {
 		So(res.Description, ShouldEqual, "description3")
 		So(len(*res.Blogs), ShouldEqual, 0)
 	})
+
 	Convey("TestDeleteCategory", t, func() {
 		w := httptest.NewRecorder()
 		cookie := getAdminCookie(r)
@@ -133,7 +134,7 @@ func TestPutCategory(t *testing.T) {
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 401)
 	})
-	Convey("TestPutCategory", t, func() {
+	Convey("TestPutCategoryInvalid", t, func() {
 		w := httptest.NewRecorder()
 		cookie := getAdminCookie(r)
 		modifiedCategory := model.Category{
@@ -185,7 +186,6 @@ func TestPutCategory(t *testing.T) {
 		So(newCategory.Description, ShouldEqual, modifiedCategory.Description)
 
 		So(newCategory.CreateAt.Equal(oldCategory.CreateAt), ShouldBeTrue)
-
 	})
 }
 

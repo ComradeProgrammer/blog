@@ -46,6 +46,12 @@ func GetUser(c *gin.Context) {
 }
 
 func PostUser(c *gin.Context) {
+	if c.Request.Body == nil {
+		c.JSON(400, gin.H{
+			"error": "no body provided",
+		})
+		return
+	}
 	body, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		c.JSON(400, gin.H{
@@ -113,6 +119,12 @@ func PutUserPassword(c *gin.Context) {
 	if err != nil {
 		c.JSON(400, gin.H{
 			"error": fmt.Sprintf("invalid parameter id: %s", c.Query("id")),
+		})
+		return
+	}
+	if c.Request.Body == nil {
+		c.JSON(400, gin.H{
+			"error": "no body provided",
 		})
 		return
 	}

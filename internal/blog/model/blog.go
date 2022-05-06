@@ -19,7 +19,7 @@ type Blog struct {
 
 func GetBlogs() ([]*Blog, error) {
 	var res []*Blog
-	result := database.Preload("Category").Order("create_at").Find(&res)
+	result := database.Preload("Category").Order("create_at desc").Find(&res)
 	if result.Error != nil {
 		return nil, result.Error
 	}
@@ -46,11 +46,11 @@ func CreateBlog(b *Blog) error {
 }
 
 func (b *Blog) Update() error {
-	result := database.Where("id =  ?",b.ID).Select("title", "content", "category_id").Updates(b)
+	result := database.Where("id =  ?", b.ID).Select("title", "content", "category_id").Updates(b)
 	if result.Error != nil {
 		return result.Error
 	}
-	if result.RowsAffected==0{
+	if result.RowsAffected == 0 {
 		return gorm.ErrRecordNotFound
 	}
 	return nil
@@ -61,7 +61,7 @@ func (b *Blog) Delete() error {
 	if result.Error != nil {
 		return result.Error
 	}
-	if result.RowsAffected==0{
+	if result.RowsAffected == 0 {
 		return gorm.ErrRecordNotFound
 	}
 	return nil

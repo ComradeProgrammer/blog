@@ -39,27 +39,26 @@ func TestUserBasic(t *testing.T) {
 		userCopy2, err := GetUserByUserName("abc@qq.com")
 		So(err, ShouldBeNil)
 		So(userCopy2, ShouldNotBeNil)
-		So(user.UserName,ShouldEqual,userCopy2.UserName)
-		So(user.IsAdmin,ShouldEqual,userCopy2.IsAdmin)
+		So(user.UserName, ShouldEqual, userCopy2.UserName)
+		So(user.IsAdmin, ShouldEqual, userCopy2.IsAdmin)
 
 		userCopy1, err := GetUserByID(user.ID)
 		So(err, ShouldBeNil)
 		So(userCopy1, ShouldNotBeNil)
-		So(user.UserName,ShouldEqual,userCopy1.UserName)
-		So(user.IsAdmin,ShouldEqual,userCopy1.IsAdmin)
+		So(user.UserName, ShouldEqual, userCopy1.UserName)
+		So(user.IsAdmin, ShouldEqual, userCopy1.IsAdmin)
 		So(userCopy1.VerifyPassword("password"), ShouldBeTrue)
 		So(userCopy1.VerifyPassword("passwdord"), ShouldBeFalse)
 
-		
 		users, err := GetUsers()
 		So(err, ShouldBeNil)
 		So(len(users), ShouldEqual, 1)
 
 		//test update
 
-		userForUpdate:=&User{
-			ID:user.ID,
-			UserName : "abcd@qq.com",
+		userForUpdate := &User{
+			ID:       user.ID,
+			UserName: "abcd@qq.com",
 			IsAdmin:  user.IsAdmin,
 		}
 		err = userForUpdate.Update()
@@ -69,7 +68,6 @@ func TestUserBasic(t *testing.T) {
 		So(err, ShouldBeNil)
 		So(userCopy3.UserName, ShouldEqual, userForUpdate.UserName)
 		//So(userCopy3.CreateAt, ShouldEqual, user.CreateAt)
-
 
 		//test dupliacte insert
 		var user4 = &User{

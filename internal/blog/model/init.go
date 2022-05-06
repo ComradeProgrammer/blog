@@ -5,6 +5,7 @@ import (
 
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
+	"gorm.io/gorm/logger"
 )
 
 var database *gorm.DB
@@ -17,7 +18,9 @@ var WatchList = []any{
 
 func ConnectDatabase(databaseName string) {
 	var err error
-	database, err = gorm.Open(sqlite.Open(databaseName), &gorm.Config{})
+	database, err = gorm.Open(sqlite.Open(databaseName), &gorm.Config{
+		Logger: logger.Discard, //shutdown output
+	})
 	if err != nil {
 		panic("Error: failed to connect database")
 	}

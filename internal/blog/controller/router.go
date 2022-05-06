@@ -26,18 +26,18 @@ func GetGinEngine() *gin.Engine {
 	r.DELETE("/category/:id", DeleteCategory)
 
 	//blog handler
-	r.GET("/blog",GetBlogs)
-	r.GET("/blog/:id",GetBlog)
-	r.POST("/blog",PostBlog)
-	r.PUT("/blog/:id",PutBlog)
-	r.DELETE("/blog/:id",DeleteBlog)
+	r.GET("/blog", GetBlogs)
+	r.GET("/blog/:id", GetBlog)
+	r.POST("/blog", PostBlog)
+	r.PUT("/blog/:id", PutBlog)
+	r.DELETE("/blog/:id", DeleteBlog)
 
 	//user controller
-	r.GET("/user",GetUsers)
-	r.GET("/user/:id",GetUser)
-	r.POST("/user",PostUser)
-	r.DELETE("/user/:id",DeleteUser)
-	
-	r.PUT("/user/:id/password",PutUserPassword)
+	r.GET("/user", GetUsers)
+	r.GET("/user/:id", GetUser)
+	r.POST("/user", PostUser)
+	r.DELETE("/user/:id", DeleteUser)
+
+	r.PUT("/user/:id/password", PutUserPassword)
 	return r
 }

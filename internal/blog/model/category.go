@@ -54,7 +54,7 @@ func (c *Category) Update() error {
 	if result.Error != nil {
 		return result.Error
 	}
-	if result.RowsAffected==0{
+	if result.RowsAffected == 0 {
 		return gorm.ErrRecordNotFound
 	}
 	return nil
@@ -65,7 +65,7 @@ func (c *Category) Delete() error {
 	if result.Error != nil {
 		return result.Error
 	}
-	if result.RowsAffected==0{
+	if result.RowsAffected == 0 {
 		return gorm.ErrRecordNotFound
 	}
 	return nil

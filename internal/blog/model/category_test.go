@@ -27,7 +27,7 @@ func TestCategoryBasic(t *testing.T) {
 
 		//test update
 		categoryForUpdate := &Category{
-			ID: category1.ID,
+			ID:          category1.ID,
 			Name:        "modified1",
 			Description: "description1",
 		}
@@ -37,8 +37,8 @@ func TestCategoryBasic(t *testing.T) {
 		category2, err := GetCategory(category.ID)
 		So(err, ShouldBeNil)
 		So(category2.Name, ShouldEqual, "modified1")
-		So(category2.Description,ShouldEqual,categoryForUpdate.Description)
-		So(category2.CreateAt.Equal(category1.CreateAt),ShouldBeTrue)
+		So(category2.Description, ShouldEqual, categoryForUpdate.Description)
+		So(category2.CreateAt.Equal(category1.CreateAt), ShouldBeTrue)
 
 		//test get all
 		categories, err := GetCategories()

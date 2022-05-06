@@ -11,6 +11,12 @@ import (
 )
 
 func Login(c *gin.Context) {
+	if c.Request.Body == nil {
+		c.JSON(400, gin.H{
+			"error": "no body provided",
+		})
+		return
+	}
 	body, err := ioutil.ReadAll(c.Request.Body)
 	if err != nil {
 		c.JSON(400, gin.H{

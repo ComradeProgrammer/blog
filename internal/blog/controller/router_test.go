@@ -55,7 +55,7 @@ func restoreTestDatabase() {
 func TestMain(m *testing.M) {
 	model.ConnectDatabase("../../../database_test.sqlite")
 	model.InitDatabase()
-	restoreTestDatabase();
+	restoreTestDatabase()
 	//shut down output
 	gin.DefaultWriter = ioutil.Discard
 	m.Run()

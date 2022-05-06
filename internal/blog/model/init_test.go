@@ -9,6 +9,3 @@ func TestMain(m *testing.M) {
 	ClearDatabase()
 	m.Run()
 }
-
-
-
