@@ -8,13 +8,13 @@ import (
 
 type Blog struct {
 	ID       int       `gorm:"id;primaryKey;autoIncrement"`
-	Title    string    `gorm:"title"`
-	Content  string    `gorm:"content"`
-	CreateAt time.Time `gorm:"create_at;autoCreateTime"`
-	UpdateAt time.Time `gorm:"update_at;autoUpdateTime"`
+	Title    string    `gorm:"title" json:"title"`
+	Content  string    `gorm:"content" json:"content"`
+	CreateAt time.Time `gorm:"create_at;autoCreateTime" json:"createAt"`
+	UpdateAt time.Time `gorm:"update_at;autoUpdateTime" json:"updateAt"`
 
-	Category   *Category `gorm:"foreignKey:category_id;constraint:OnUpdate:RESTRICT,OnDelete:RESTRICT;"`
-	CategoryID int       `gorm:"category_id"`
+	Category   *Category `gorm:"foreignKey:category_id;constraint:OnUpdate:RESTRICT,OnDelete:RESTRICT;" json:"category"`
+	CategoryID int       `gorm:"category_id" json:"categoryID"`
 }
 
 func GetBlogs() ([]*Blog, error) {

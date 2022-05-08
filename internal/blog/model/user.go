@@ -10,11 +10,11 @@ import (
 
 type User struct {
 	ID                int       `gorm:"id;primaryKey;autoIncrement"`
-	UserName          string    `gorm:"user_name;unique"`
-	PasswordEncrypted []byte    `gorm:"password_encrypted"`
-	IsAdmin           bool      `gorm:"is_admin"`
-	CreateAt          time.Time `gorm:"create_at;autoCreateTime"`
-	UpdateAt          time.Time `gorm:"update_at;autoUpdateTime"`
+	UserName          string    `gorm:"user_name;unique" json:"userName"`
+	PasswordEncrypted []byte    `gorm:"password_encrypted" json:"-"`
+	IsAdmin           bool      `gorm:"is_admin" json:"isAdmin"`
+	CreateAt          time.Time `gorm:"create_at;autoCreateTime" json:"createAt"`
+	UpdateAt          time.Time `gorm:"update_at;autoUpdateTime" json:"updateAt"`
 }
 
 func GetUsers() ([]*User, error) {

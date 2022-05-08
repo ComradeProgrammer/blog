@@ -17,7 +17,7 @@ func TestGetUsers(t *testing.T) {
 	r := GetGinEngine()
 	Convey("TestGetUsers", t, func() {
 		w := httptest.NewRecorder()
-		req, _ := http.NewRequest("GET", "/user", nil)
+		req, _ := http.NewRequest("GET", "/api/user", nil)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 200)
 		body, err := io.ReadAll(w.Body)
@@ -38,7 +38,7 @@ func TestGetUser(t *testing.T) {
 	r := GetGinEngine()
 	Convey("TestGetCategory", t, func() {
 		w := httptest.NewRecorder()
-		req, _ := http.NewRequest("GET", "/user/1", nil)
+		req, _ := http.NewRequest("GET", "/api/user/1", nil)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 200)
 		body, err := io.ReadAll(w.Body)
@@ -55,7 +55,7 @@ func TestGetUser(t *testing.T) {
 	})
 	Convey("TestGetUser404", t, func() {
 		w := httptest.NewRecorder()
-		req, _ := http.NewRequest("GET", "/user/100", nil)
+		req, _ := http.NewRequest("GET", "/api/user/100", nil)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 404)
 	})
@@ -66,7 +66,7 @@ func TestPostUser(t *testing.T) {
 	r := GetGinEngine()
 	Convey("TestPostUserEmptyBody", t, func() {
 		w := httptest.NewRecorder()
-		req, _ := http.NewRequest("POST", "/user", nil)
+		req, _ := http.NewRequest("POST", "/api/user", nil)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 400)
 	})
@@ -82,13 +82,13 @@ func TestPostUser(t *testing.T) {
 		user.SetPassword("123456789")
 		data, _ := json.Marshal(user)
 
-		req, _ := http.NewRequest("POST", "/user", bytes.NewBuffer(data))
+		req, _ := http.NewRequest("POST", "/api/user", bytes.NewBuffer(data))
 		req.Header.Set("Cookie", cookie)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 200)
 
 		w = httptest.NewRecorder()
-		req, _ = http.NewRequest("GET", "/user/2", nil)
+		req, _ = http.NewRequest("GET", "/api/user/2", nil)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 200)
 		body, err := io.ReadAll(w.Body)
@@ -107,13 +107,13 @@ func TestPostUser(t *testing.T) {
 	Convey("TestDeleteUser", t, func() {
 		w := httptest.NewRecorder()
 		cookie := getAdminCookie(r)
-		req, _ := http.NewRequest("DELETE", "/user/2", nil)
+		req, _ := http.NewRequest("DELETE", "/api/user/2", nil)
 		req.Header.Set("Cookie", cookie)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 200)
 
 		w = httptest.NewRecorder()
-		req, _ = http.NewRequest("GET", "/user/2", nil)
+		req, _ = http.NewRequest("GET", "/api/user/2", nil)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 404)
 	})
@@ -129,12 +129,12 @@ func TestUserChangePassword(t *testing.T) {
 			"newPassword": "123456789",
 		}
 		data, _ := json.Marshal(payload)
-		req, _ := http.NewRequest("PUT", "/user/1/password", bytes.NewBuffer(data))
+		req, _ := http.NewRequest("PUT", "/api/user/1/password", bytes.NewBuffer(data))
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 200)
 
 		w = httptest.NewRecorder()
-		req, _ = http.NewRequest("GET", "/user/1", nil)
+		req, _ = http.NewRequest("GET", "/api/user/1", nil)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 200)
 		body, err := io.ReadAll(w.Body)

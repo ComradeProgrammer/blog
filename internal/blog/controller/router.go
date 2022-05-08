@@ -12,32 +12,32 @@ func GetGinEngine() *gin.Engine {
 	r.Use(sessions.Sessions("session", store))
 
 	//keep-alive handler
-	r.GET("/ping", Ping)
+	r.GET("/api/ping", Ping)
 
 	//user handler
-	r.POST("/login", Login)
-	r.DELETE("login", LogOut)
+	r.POST("/api/login", Login)
+	r.DELETE("/apilogin", LogOut)
 
 	//blog catrgory handler
-	r.GET("/category/:id", GetCategory)
-	r.GET("/category", GetCategories)
-	r.POST("/category", PostCategory)
-	r.PUT("/category/:id", PutCategory)
-	r.DELETE("/category/:id", DeleteCategory)
+	r.GET("/api/category/:id", GetCategory)
+	r.GET("/api/category", GetCategories)
+	r.POST("/api/category", PostCategory)
+	r.PUT("/api/category/:id", PutCategory)
+	r.DELETE("/api/category/:id", DeleteCategory)
 
 	//blog handler
-	r.GET("/blog", GetBlogs)
-	r.GET("/blog/:id", GetBlog)
-	r.POST("/blog", PostBlog)
-	r.PUT("/blog/:id", PutBlog)
-	r.DELETE("/blog/:id", DeleteBlog)
+	r.GET("/api/blog", GetBlogs)
+	r.GET("/api/blog/:id", GetBlog)
+	r.POST("/api/blog", PostBlog)
+	r.PUT("/api/blog/:id", PutBlog)
+	r.DELETE("/api/blog/:id", DeleteBlog)
 
 	//user controller
-	r.GET("/user", GetUsers)
-	r.GET("/user/:id", GetUser)
-	r.POST("/user", PostUser)
-	r.DELETE("/user/:id", DeleteUser)
+	r.GET("/api/user", GetUsers)
+	r.GET("/api/user/:id", GetUser)
+	r.POST("/api/user", PostUser)
+	r.DELETE("/api/user/:id", DeleteUser)
 
-	r.PUT("/user/:id/password", PutUserPassword)
+	r.PUT("/api/user/:id/password", PutUserPassword)
 	return r
 }

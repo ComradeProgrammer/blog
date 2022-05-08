@@ -17,7 +17,7 @@ func TestGetCategories(t *testing.T) {
 	r := GetGinEngine()
 	Convey("TestGetCategoriesBasic", t, func() {
 		w := httptest.NewRecorder()
-		req, _ := http.NewRequest("GET", "/category", nil)
+		req, _ := http.NewRequest("GET", "/api/category", nil)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 200)
 		body, err := io.ReadAll(w.Body)
@@ -42,7 +42,7 @@ func TestGetCategory(t *testing.T) {
 	r := GetGinEngine()
 	Convey("TestGetCategory", t, func() {
 		w := httptest.NewRecorder()
-		req, _ := http.NewRequest("GET", "/category/1", nil)
+		req, _ := http.NewRequest("GET", "/api/category/1", nil)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 200)
 		body, err := io.ReadAll(w.Body)
@@ -63,7 +63,7 @@ func TestGetCategory(t *testing.T) {
 	})
 	Convey("TestGetCategory404", t, func() {
 		w := httptest.NewRecorder()
-		req, _ := http.NewRequest("GET", "/category/100", nil)
+		req, _ := http.NewRequest("GET", "/api/category/100", nil)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 404)
 	})
@@ -74,7 +74,7 @@ func TestPostCategory(t *testing.T) {
 	r := GetGinEngine()
 	Convey("TestPostCategoryUnauthorized", t, func() {
 		w := httptest.NewRecorder()
-		req, _ := http.NewRequest("POST", "/category", nil)
+		req, _ := http.NewRequest("POST", "/api/category", nil)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 401)
 	})
@@ -89,13 +89,13 @@ func TestPostCategory(t *testing.T) {
 		}
 		data, _ := json.Marshal(category)
 
-		req, _ := http.NewRequest("POST", "/category", bytes.NewBuffer(data))
+		req, _ := http.NewRequest("POST", "/api/category", bytes.NewBuffer(data))
 		req.Header.Set("Cookie", cookie)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 200)
 
 		w = httptest.NewRecorder()
-		req, _ = http.NewRequest("GET", "/category/3", nil)
+		req, _ = http.NewRequest("GET", "/api/category/3", nil)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 200)
 		body, err := io.ReadAll(w.Body)
@@ -113,13 +113,13 @@ func TestPostCategory(t *testing.T) {
 	Convey("TestDeleteCategory", t, func() {
 		w := httptest.NewRecorder()
 		cookie := getAdminCookie(r)
-		req, _ := http.NewRequest("DELETE", "/category/3", nil)
+		req, _ := http.NewRequest("DELETE", "/api/category/3", nil)
 		req.Header.Set("Cookie", cookie)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 200)
 
 		w = httptest.NewRecorder()
-		req, _ = http.NewRequest("GET", "/category/3", nil)
+		req, _ = http.NewRequest("GET", "/api/category/3", nil)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 404)
 	})
@@ -130,7 +130,7 @@ func TestPutCategory(t *testing.T) {
 	r := GetGinEngine()
 	Convey("TestPutCategoryUnauthorized", t, func() {
 		w := httptest.NewRecorder()
-		req, _ := http.NewRequest("PUT", "/category/1", nil)
+		req, _ := http.NewRequest("PUT", "/api/category/1", nil)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 401)
 	})
@@ -142,14 +142,14 @@ func TestPutCategory(t *testing.T) {
 			Description: "modifiedDescription",
 		}
 		data, _ := json.Marshal(modifiedCategory)
-		req2, _ := http.NewRequest("PUT", "/category/200", bytes.NewBuffer(data))
+		req2, _ := http.NewRequest("PUT", "/api/category/200", bytes.NewBuffer(data))
 		req2.Header.Set("Cookie", cookie)
 		r.ServeHTTP(w, req2)
 		So(w.Code, ShouldEqual, 404)
 	})
 	Convey("TestPutCategory", t, func() {
 		w := httptest.NewRecorder()
-		req, _ := http.NewRequest("GET", "/category/2", nil)
+		req, _ := http.NewRequest("GET", "/api/category/2", nil)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 200)
 		body, err := io.ReadAll(w.Body)
@@ -166,13 +166,13 @@ func TestPutCategory(t *testing.T) {
 			Description: "modifiedDescription",
 		}
 		data, err := json.Marshal(modifiedCategory)
-		req2, _ := http.NewRequest("PUT", "/category/2", bytes.NewBuffer(data))
+		req2, _ := http.NewRequest("PUT", "/api/category/2", bytes.NewBuffer(data))
 		req2.Header.Set("Cookie", cookie)
 		r.ServeHTTP(w, req2)
 		So(w.Code, ShouldEqual, 200)
 
 		w = httptest.NewRecorder()
-		req3, _ := http.NewRequest("GET", "/category/2", nil)
+		req3, _ := http.NewRequest("GET", "/api/category/2", nil)
 		r.ServeHTTP(w, req3)
 		So(w.Code, ShouldEqual, 200)
 		body, err = io.ReadAll(w.Body)
@@ -195,14 +195,14 @@ func TestDeleteCategory(t *testing.T) {
 
 	Convey("TestDeleteCategoryUnauthorized", t, func() {
 		w := httptest.NewRecorder()
-		req, _ := http.NewRequest("DELETE", "/category/1", nil)
+		req, _ := http.NewRequest("DELETE", "/api/category/1", nil)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 401)
 	})
 	Convey("TestDeleteCategory", t, func() {
 		w := httptest.NewRecorder()
 		cookie := getAdminCookie(r)
-		req, _ := http.NewRequest("DELETE", "/category/300", nil)
+		req, _ := http.NewRequest("DELETE", "/api/category/300", nil)
 		req.Header.Set("Cookie", cookie)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 404)

@@ -17,7 +17,7 @@ func TestGetBlogs(t *testing.T) {
 	r := GetGinEngine()
 	Convey("TestGetBlogs", t, func() {
 		w := httptest.NewRecorder()
-		req, _ := http.NewRequest("GET", "/blog", nil)
+		req, _ := http.NewRequest("GET", "/api/blog", nil)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 200)
 		body, err := io.ReadAll(w.Body)
@@ -47,7 +47,7 @@ func TestGetBlog(t *testing.T) {
 	r := GetGinEngine()
 	Convey("TestGetBlog", t, func() {
 		w := httptest.NewRecorder()
-		req, _ := http.NewRequest("GET", "/blog/2", nil)
+		req, _ := http.NewRequest("GET", "/api/blog/2", nil)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 200)
 		body, err := io.ReadAll(w.Body)
@@ -67,7 +67,7 @@ func TestPostBlog(t *testing.T) {
 	r := GetGinEngine()
 	Convey("TestPostBlogUnauthorized", t, func() {
 		w := httptest.NewRecorder()
-		req, _ := http.NewRequest("POST", "/blog", nil)
+		req, _ := http.NewRequest("POST", "/api/blog", nil)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 401)
 	})
@@ -81,13 +81,13 @@ func TestPostBlog(t *testing.T) {
 			CategoryID: 2,
 		}
 		data, _ := json.Marshal(blog)
-		req, _ := http.NewRequest("POST", "/blog", bytes.NewBuffer(data))
+		req, _ := http.NewRequest("POST", "/api/blog", bytes.NewBuffer(data))
 		req.Header.Set("Cookie", cookie)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 200)
 
 		w = httptest.NewRecorder()
-		req, _ = http.NewRequest("GET", "/blog/5", nil)
+		req, _ = http.NewRequest("GET", "/api/blog/5", nil)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 200)
 		body, err := io.ReadAll(w.Body)
@@ -108,7 +108,7 @@ func TestPostBlog(t *testing.T) {
 			Content: "BlogContent",
 		}
 		data, _ := json.Marshal(blog)
-		req, _ := http.NewRequest("POST", "/blog", bytes.NewBuffer(data))
+		req, _ := http.NewRequest("POST", "/api/blog", bytes.NewBuffer(data))
 		req.Header.Set("Cookie", cookie)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 400)
@@ -124,7 +124,7 @@ func TestPostBlog(t *testing.T) {
 			CategoryID: 7843,
 		}
 		data, _ := json.Marshal(blog)
-		req, _ := http.NewRequest("POST", "/blog", bytes.NewBuffer(data))
+		req, _ := http.NewRequest("POST", "/api/blog", bytes.NewBuffer(data))
 		req.Header.Set("Cookie", cookie)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 400)
@@ -133,13 +133,13 @@ func TestPostBlog(t *testing.T) {
 	Convey("TestDeleteBlog", t, func() {
 		w := httptest.NewRecorder()
 		cookie := getAdminCookie(r)
-		req, _ := http.NewRequest("DELETE", "/blog/3", nil)
+		req, _ := http.NewRequest("DELETE", "/api/blog/3", nil)
 		req.Header.Set("Cookie", cookie)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 200)
 
 		w = httptest.NewRecorder()
-		req, _ = http.NewRequest("GET", "/blog/3", nil)
+		req, _ = http.NewRequest("GET", "/api/blog/3", nil)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 404)
 	})
@@ -150,14 +150,14 @@ func TestPutBlog(t *testing.T) {
 	r := GetGinEngine()
 	Convey("TestPutBlogUnauthorized", t, func() {
 		w := httptest.NewRecorder()
-		req, _ := http.NewRequest("PUT", "/blog/1", nil)
+		req, _ := http.NewRequest("PUT", "/api/blog/1", nil)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 401)
 	})
 
 	Convey("TestPutBlog", t, func() {
 		w := httptest.NewRecorder()
-		req, _ := http.NewRequest("GET", "/blog/2", nil)
+		req, _ := http.NewRequest("GET", "/api/blog/2", nil)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 200)
 		body, err := io.ReadAll(w.Body)
@@ -174,13 +174,13 @@ func TestPutBlog(t *testing.T) {
 			CategoryID: 1,
 		}
 		data, err := json.Marshal(modifiedBlog)
-		req2, _ := http.NewRequest("PUT", "/blog/2", bytes.NewBuffer(data))
+		req2, _ := http.NewRequest("PUT", "/api/blog/2", bytes.NewBuffer(data))
 		req2.Header.Set("Cookie", cookie)
 		r.ServeHTTP(w, req2)
 		So(w.Code, ShouldEqual, 200)
 
 		w = httptest.NewRecorder()
-		req3, _ := http.NewRequest("GET", "/blog/2", nil)
+		req3, _ := http.NewRequest("GET", "/api/blog/2", nil)
 		r.ServeHTTP(w, req3)
 		So(w.Code, ShouldEqual, 200)
 		body, err = io.ReadAll(w.Body)
@@ -202,14 +202,14 @@ func TestDeleteBlog(t *testing.T) {
 
 	Convey("TestDeleteBlogUnauthorized", t, func() {
 		w := httptest.NewRecorder()
-		req, _ := http.NewRequest("DELETE", "/blog/1", nil)
+		req, _ := http.NewRequest("DELETE", "/api/blog/1", nil)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 401)
 	})
 	Convey("TestDeleteBlog", t, func() {
 		w := httptest.NewRecorder()
 		cookie := getAdminCookie(r)
-		req, _ := http.NewRequest("DELETE", "/blog/300", nil)
+		req, _ := http.NewRequest("DELETE", "/api/blog/300", nil)
 		req.Header.Set("Cookie", cookie)
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 404)

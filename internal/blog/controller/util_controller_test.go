@@ -16,7 +16,7 @@ func getAdminCookie(r *gin.Engine) string {
 		"password": "123456",
 	}
 	data, _ := json.Marshal(body)
-	req, _ := http.NewRequest("POST", "/login", bytes.NewBuffer(data))
+	req, _ := http.NewRequest("POST", "/api/login", bytes.NewBuffer(data))
 	r.ServeHTTP(w, req)
 	return w.Header().Get("Set-Cookie")
 
