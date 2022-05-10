@@ -12,6 +12,10 @@ class AllBlogsPage extends React.Component {
     }
   }
   componentDidMount() {
+    this.fetchData()
+  }
+
+  fetchData() {
     fetch("/api/blog").then(res => {
       //todo: handle res code
       return res.json()
@@ -22,6 +26,7 @@ class AllBlogsPage extends React.Component {
       console.log(e)
     })
   }
+
   render() {
     let blogItems = []
     for (let i = 0; i < this.state.blogs.length; i++) {
@@ -34,6 +39,7 @@ class AllBlogsPage extends React.Component {
         <div style={{maxWidth: "1920px", minWidth: "755px", margin: "0 auto"}}>
           <LeftSideBar></LeftSideBar>
           <RightBody>
+            <div style={{fontSize: "30px", width: "100%", textAlign: "center"}}>All blogs</div>
             {blogItems}
           </RightBody>
         </div>

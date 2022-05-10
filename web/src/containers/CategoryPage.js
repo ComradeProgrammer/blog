@@ -13,18 +13,22 @@ class CategoryPage extends React.Component {
     }
   }
   componentDidMount() {
+    this.fetchData()
+  }
+
+  fetchData() {
     let id = this.props.params.id
     fetch(`/api/category/${id}`).then(res => {
       //todo: handle res code
       return res.json()
     }).then((res) => {
       this.setState({category: res})
-      console.log(res)
     }).catch(e => {
       //todo: handle err
       console.log(e)
     })
   }
+
   render() {
     let blogItems = []
     if (this.state.category?.blogs) {

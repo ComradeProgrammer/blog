@@ -16,7 +16,7 @@ func GetGinEngine() *gin.Engine {
 
 	//user handler
 	r.POST("/api/login", Login)
-	r.DELETE("/apilogin", LogOut)
+	r.DELETE("/api/login", LogOut)
 
 	//blog catrgory handler
 	r.GET("/api/category/:id", GetCategory)

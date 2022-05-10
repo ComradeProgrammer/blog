@@ -1,5 +1,6 @@
 import React from 'react';
 import RetroCard from '../components/common/RetroCard';
+import {withRouter} from '../containers/util';
 import RetroButton from './common/RetroButton';
 
 class LeftSideBar extends React.Component {
@@ -25,8 +26,11 @@ class LeftSideBar extends React.Component {
   render() {
     let categoryButtons = []
     for (let i = 0; i < this.state.categories.length; i++) {
+      let id = this.state.categories[i].ID
       categoryButtons.push(
-        (<RetroButton key={this.state.categories[i].ID} style={{width: "90%", display: "block", margin: "3px auto"}}>{this.state.categories[i].name}</RetroButton>)
+        (<RetroButton key={id} style={{width: "90%", display: "block", margin: "3px auto"}} onClick={() => {this.onClick(id)}}>
+          {this.state.categories[i].name}
+        </RetroButton>)
       )
     }
     return (
@@ -36,5 +40,10 @@ class LeftSideBar extends React.Component {
       </RetroCard>
     )
   }
+
+  onClick(id) {
+    console.log(id)
+    this.props.navigate(`/category/${id}`)
+  }
 }
-export default LeftSideBar
+export default withRouter(LeftSideBar)

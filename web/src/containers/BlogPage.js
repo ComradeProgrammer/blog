@@ -21,7 +21,12 @@ class BlogPage extends React.Component {
     }
 
   }
+
   componentDidMount() {
+    this.fetchData()
+  }
+
+  fetchData() {
     let id = this.props.params.id
     fetch(`/api/blog/${id}`).then(res => {
       //todo: handle res code

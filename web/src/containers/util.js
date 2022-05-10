@@ -4,6 +4,7 @@ export function withRouter(Child) {
     const location = useLocation();
     const navigate = useNavigate();
     const params = useParams();
-    return <Child {...props} navigate={navigate} location={location} params={params} />;
+    //key here can trigger componentDidMount event when the router is moving backward
+    return <Child {...props} navigate={navigate} location={location} params={params} key={location.pathname} />;
   }
 }

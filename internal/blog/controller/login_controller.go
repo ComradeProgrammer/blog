@@ -68,6 +68,7 @@ func Login(c *gin.Context) {
 	session.Save()
 	c.JSON(200, gin.H{
 		"msg": "ok",
+		"user":user,
 	})
 }
 

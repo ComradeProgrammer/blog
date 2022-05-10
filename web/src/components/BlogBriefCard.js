@@ -1,4 +1,5 @@
 import React from 'react';
+import {withRouter} from '../containers/util';
 import RetroCard from './common/RetroCard';
 
 class BlogBriefCard extends React.Component {
@@ -14,18 +15,20 @@ class BlogBriefCard extends React.Component {
         display: "block",
         overflow: "hidden",
         whiteSpace: "nowrap",
-        textOverflow: "ellipsis"
+        textOverflow: "ellipsis",
+        cursor: "pointer"
       }
     }
     //copy the remaining style
     for (let key in props.style) {
       this.state.style[key] = props.style[key]
     }
+    this.onClick = this.onClick.bind(this)
   }
 
   render() {
     return (
-      <RetroCard style={this.state.style}>
+      <RetroCard style={this.state.style} onClick={this.onClick}>
         <div style={{fontSize: "30px", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis"}}>{this.state.blog.title}</div>
         <div style={{fontSize: "15px", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis"}}>
           Category: {this.state.blog.category.name}
@@ -38,5 +41,9 @@ class BlogBriefCard extends React.Component {
       </RetroCard>
     )
   }
+
+  onClick() {
+    this.props.navigate(`/blog/${this.state.blog.ID}`)
+  }
 }
-export default BlogBriefCard
+export default withRouter(BlogBriefCard)

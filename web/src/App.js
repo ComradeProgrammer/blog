@@ -5,6 +5,7 @@ import AllBlogsPage from './containers/AllBlogsPage';
 import AboutMePage from './containers/AboutMePage';
 import BlogPage from './containers/BlogPage';
 import CategoryPage from './containers/CategoryPage';
+import LoginPage from './containers/LoginPage';
 
 class App extends React.Component {
   render() {
@@ -13,8 +14,11 @@ class App extends React.Component {
         <Routes>
           <Route path="/" element={<AllBlogsPage />} />
           <Route path="aboutme" element={<AboutMePage />} />
+          <Route path="blog" element={<AllBlogsPage />} />
           <Route path="blog/:id" element={<BlogPage />} />
           <Route path="category/:id" element={<CategoryPage />} />
+          <Route path="/login" element={<LoginPage/>} />
+
         </Routes>
       </BrowserRouter>
     );
