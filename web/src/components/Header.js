@@ -28,9 +28,9 @@ class Header extends React.Component {
   }
 
   componentDidUpdate() {
-    if (sessionStorage.getItem("user")) {
+    if (localStorage.getItem("user")) {
       try {
-        let user = JSON.parse(sessionStorage.getItem("user"))
+        let user = JSON.parse(localStorage.getItem("user"))
         if (user.userName) {
           if (user.userName !== this.state?.user?.userName) {
             this.setState({user: user})
@@ -39,7 +39,7 @@ class Header extends React.Component {
           throw Error("invalid session")
         }
       } catch (e) {
-        sessionStorage.removeItem("user")
+        localStorage.removeItem("user")
         this.setState({user: null})
       }
     }
@@ -47,7 +47,6 @@ class Header extends React.Component {
 
   render() {
 
-    console.log(this.state.user == null ?"62px":"0")
     return (
       <div style={this.state.style} >
         <img style={{height: "60px", width: "60px", display: "inline-block"}} src={Logo} alt="" />
@@ -81,7 +80,7 @@ class Header extends React.Component {
   onLoginButtonClick(){
     if(this.state.user!==null){
       //todo: use logout api
-      sessionStorage.removeItem("user")
+      localStorage.removeItem("user")
       this.setState({user: null})
     }
     this.props.navigate("/login")

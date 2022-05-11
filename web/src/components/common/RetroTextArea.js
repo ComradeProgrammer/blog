@@ -1,13 +1,6 @@
 import React from 'react';
-/**
- * Attributes: 
- * primary   boolean    use green style(default)
- * danger    boolean    use red style
- * warning   boolean    use orange style
- * style     object
- * onClick   funcion
- */
-class RetroCard extends React.Component {
+import "./RetroTextArea.css"
+class RetroTextArea extends React.Component {
   constructor(props) {
     super(props);
     let color = "lightgreen"
@@ -16,22 +9,25 @@ class RetroCard extends React.Component {
     } else if (props.warning) {
       color = "orange"
     }
+
     //set style
     this.state = {
       style: {
         color: color,
         backgroundColor: "black",
-        border: "1px solid " + color,
+        border: "2px solid " + color,
+        padding: "3px",
         display: "inline-block",
-      }
+        scrollBarBaseColor: "green"
+      },
     };
+
+
     //copy the remaining style
     for (let key in props.style) {
       this.state.style[key] = props.style[key]
     }
-
-    //bind this for methods
-    this.onClick = this.onClick.bind(this)
+    this.onTextAreaChange = this.onTextAreaChange.bind(this)
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -42,18 +38,18 @@ class RetroCard extends React.Component {
     this.setState({style: newStyle})
   }
 
-  render() {
-    return (
-      <div style={this.state.style} onClick={this.onClick}>
-        {this.props.children}
-      </div>
-    );
-  }
-
-  onClick() {
-    if (this.props.onClick) {
-      this.props.onClick()
+  onTextAreaChange(e) {
+    if (this.props.onChange) {
+      this.props.onChange(e)
     }
   }
+
+  render() {
+    return (
+      <textarea style={this.state.style} onChange={this.onTextAreaChange} className="retrotextarea" />
+    )
+  }
+
 }
-export default RetroCard;
+
+export default RetroTextArea

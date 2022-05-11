@@ -1,0 +1,14 @@
+.retrotextarea::-webkit-scrollbar {
+    background-color: black;
+}
+
+/*定义滚动条轨道*/
+.retrotextarea::-webkit-scrollbar-track {
+    background-color: black;
+    border: 1px solid lightgreen
+}
+
+/*定义滑块*/
+.retrotextarea::-webkit-scrollbar-thumb {
+    background-color: lightgreen;
+}

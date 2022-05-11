@@ -4,6 +4,7 @@ import Header from '../components/Header';
 import LeftSideBar from '../components/LeftSideBar';
 import RightBody from '../components/RightBody';
 import BlogBriefCard from '../components/BlogBriefCard';
+import RetroButton from '../components/common/RetroButton';
 
 class CategoryPage extends React.Component {
   constructor(props) {
@@ -55,6 +56,10 @@ class CategoryPage extends React.Component {
             </div>
 
             <hr style={{border: "1px solid lightgreen"}} />
+            <RetroButton  style={{fontSize: "20px",margin:"5px"}}>Create Blog</RetroButton>
+            <RetroButton warning style={{fontSize: "20px",margin:"5px"}}>Edit Category</RetroButton>
+            <RetroButton danger style={{fontSize: "20px",margin:"5px"}}>Delete Category</RetroButton>
+
             {blogItems}
           </RightBody>
         </div>

@@ -42,7 +42,6 @@ class LeftSideBar extends React.Component {
   }
 
   onClick(id) {
-    console.log(id)
     this.props.navigate(`/category/${id}`)
   }
 }

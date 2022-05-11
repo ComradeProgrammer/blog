@@ -1,5 +1,6 @@
 import React from 'react';
 import BlogBriefCard from '../components/BlogBriefCard';
+import RetroButton from '../components/common/RetroButton';
 import Header from '../components/Header';
 import LeftSideBar from '../components/LeftSideBar';
 import RightBody from '../components/RightBody';
@@ -40,6 +41,8 @@ class AllBlogsPage extends React.Component {
           <LeftSideBar></LeftSideBar>
           <RightBody>
             <div style={{fontSize: "30px", width: "100%", textAlign: "center"}}>All blogs</div>
+            <hr style={{border: "1px solid lightgreen"}} />
+            <RetroButton style={{fontSize: "20px",margin:"10px"}}>Create category</RetroButton>
             {blogItems}
           </RightBody>
         </div>

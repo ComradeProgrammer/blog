@@ -44,8 +44,7 @@ class LoginPage extends React.Component {
       }
 
     }).then((res) => {
-      console.log(res)
-      sessionStorage.setItem("user", JSON.stringify(res.user))
+      localStorage.setItem("user", JSON.stringify(res.user))
       this.props.navigate(-1)
 
     }).catch(e => {

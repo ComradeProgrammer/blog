@@ -121,7 +121,7 @@ func TestPostBlog(t *testing.T) {
 		blog := model.Blog{
 			Title:      "MyBlog",
 			Content:    "BlogContent",
-			CategoryID: 7843,
+			CategoryID: 0,
 		}
 		data, _ := json.Marshal(blog)
 		req, _ := http.NewRequest("POST", "/api/blog", bytes.NewBuffer(data))

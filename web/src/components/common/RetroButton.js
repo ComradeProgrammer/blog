@@ -24,7 +24,8 @@ class RetroButton extends React.Component {
         border: "1px solid " + color,
         padding: "3px",
         display: "inline-block",
-        cursor: "pointer"
+        cursor: "pointer",
+        textAlign:"center",
       }
     };
     //copy the remaining style
@@ -35,6 +36,22 @@ class RetroButton extends React.Component {
     //bind this for methods
     this.onMouseEnterLeave = this.onMouseEnterLeave.bind(this)
     this.onClick = this.onClick.bind(this)
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    let newStyle = {...this.state.style}
+    for (let key in nextProps.style) {
+      newStyle[key] = nextProps.style[key]
+    }
+    this.setState({style: newStyle})
+  }
+  
+  render() {
+    return (
+      <div style={this.state.style} onMouseEnter={this.onMouseEnterLeave} onMouseLeave={this.onMouseEnterLeave} onClick={this.onClick}>
+        {this.props.children}
+      </div>
+    );
   }
 
   onClick() {
@@ -51,12 +68,5 @@ class RetroButton extends React.Component {
     this.setState({style: newStyle})
   }
 
-  render() {
-    return (
-      <div style={this.state.style} onMouseEnter={this.onMouseEnterLeave} onMouseLeave={this.onMouseEnterLeave} onClick={this.onClick}>
-        {this.props.children}
-      </div>
-    );
-  }
 }
 export default RetroButton;

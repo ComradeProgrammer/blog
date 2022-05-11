@@ -26,12 +26,20 @@ class BlogBriefCard extends React.Component {
     this.onClick = this.onClick.bind(this)
   }
 
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    let newStyle = {...this.state.style}
+    for (let key in nextProps.style) {
+      newStyle[key] = nextProps.style[key]
+    }
+    this.setState({style: newStyle})
+  }
+
   render() {
     return (
       <RetroCard style={this.state.style} onClick={this.onClick}>
         <div style={{fontSize: "30px", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis"}}>{this.state.blog.title}</div>
         <div style={{fontSize: "15px", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis"}}>
-          Category: {this.state.blog.category.name}
+          Category: {this.state.blog?.category?.name}
           {'\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0'}
           Create Time: {new Date(this.state.blog.createAt).toUTCString()}
           {'\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0'}
