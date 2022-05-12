@@ -4,7 +4,7 @@ import RetroButton from '../components/common/RetroButton';
 import Header from '../components/Header';
 import LeftSideBar from '../components/LeftSideBar';
 import RightBody from '../components/RightBody';
-import {withRouter} from './util';
+import {isAdmin, withRouter} from './util';
 class AllBlogsPage extends React.Component {
   constructor(props) {
     super(props);
@@ -12,6 +12,7 @@ class AllBlogsPage extends React.Component {
       blogs: []
     }
     this.onCreateBlogButtonClick = this.onCreateBlogButtonClick.bind(this)
+    this.onCreateCategoryButtonClick = this.onCreateCategoryButtonClick.bind(this)
   }
   componentDidMount() {
     this.fetchData()
@@ -30,6 +31,7 @@ class AllBlogsPage extends React.Component {
   }
 
   render() {
+    let hidden = !isAdmin()
     let blogItems = []
     for (let i = 0; i < this.state.blogs.length; i++) {
       blogItems.push((<BlogBriefCard blog={this.state.blogs[i]} key={this.state.blogs[i].ID}></BlogBriefCard>))
@@ -43,8 +45,8 @@ class AllBlogsPage extends React.Component {
           <RightBody>
             <div style={{fontSize: "30px", width: "100%", textAlign: "center"}}>All blogs</div>
             <hr style={{border: "1px solid lightgreen"}} />
-            <RetroButton style={{fontSize: "20px", margin: "10px"}}>Create category</RetroButton>
-            <RetroButton style={{fontSize: "20px", margin: "5px"}} onClick={this.onCreateBlogButtonClick}>Create Blog</RetroButton>
+            <RetroButton hidden={hidden} style={{fontSize: "20px", margin: "10px"}} onClick={this.onCreateCategoryButtonClick}>Create category</RetroButton>
+            <RetroButton hidden={hidden} style={{fontSize: "20px", margin: "5px"}} onClick={this.onCreateBlogButtonClick}>Create Blog</RetroButton>
             {blogItems}
           </RightBody>
         </div>
@@ -53,6 +55,9 @@ class AllBlogsPage extends React.Component {
   }
   onCreateBlogButtonClick() {
     this.props.navigate(`/createblog`)
+  }
+  onCreateCategoryButtonClick() {
+    this.props.navigate(`/createcategory`)
   }
 }
 export default withRouter(AllBlogsPage)

@@ -16,6 +16,13 @@ class RightBody extends React.Component {
       this.state.style[key] = props.style[key]
     }
   }
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    let newStyle = {...this.state.style}
+    for (let key in nextProps.style) {
+      newStyle[key] = nextProps.style[key]
+    }
+    this.setState({style: newStyle})
+  }
   render() {
     return (
       <RetroCard style={this.state.style}>

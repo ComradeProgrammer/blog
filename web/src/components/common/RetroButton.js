@@ -6,6 +6,7 @@ import React from 'react';
  * warning   boolean    use orange style
  * style     object
  * onClick   funcion
+ * hidden    boolean
  */
 class RetroButton extends React.Component {
   constructor(props) {
@@ -26,7 +27,8 @@ class RetroButton extends React.Component {
         display: "inline-block",
         cursor: "pointer",
         textAlign:"center",
-      }
+      },
+      hidden:props.hidden?true:false
     };
     //copy the remaining style
     for (let key in props.style) {
@@ -44,9 +46,17 @@ class RetroButton extends React.Component {
       newStyle[key] = nextProps.style[key]
     }
     this.setState({style: newStyle})
+    if(nextProps.hidden){
+      this.setState({hidden:true})
+    }else{
+      this.setState({hidden:false})
+    }
   }
   
   render() {
+    if(this.state.hidden){
+      return null
+    }
     return (
       <div style={this.state.style} onMouseEnter={this.onMouseEnterLeave} onMouseLeave={this.onMouseEnterLeave} onClick={this.onClick}>
         {this.props.children}

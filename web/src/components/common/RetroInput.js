@@ -1,5 +1,10 @@
 import React from 'react';
-
+/**
+ * props:
+ * style
+ * value (defaule value)
+ * onChange
+ */
 class RetroInput extends React.Component {
   constructor(props) {
     super(props);
@@ -39,8 +44,10 @@ class RetroInput extends React.Component {
     for (let key in nextProps.style) {
       newStyle[key] = nextProps.style[key]
     }
-    console.log(nextProps.value)
-    this.setState({style: newStyle, value: nextProps.value})
+    this.setState({style: newStyle})
+    if (nextProps.value) {
+      this.setState({value: nextProps.value})
+    }
   }
 
 
@@ -50,6 +57,7 @@ class RetroInput extends React.Component {
     )
   }
   onInputChange(e) {
+    this.setState({value:e.target.value})
     if (this.props.onChange) {
       this.props.onChange(e)
     }

@@ -3,7 +3,7 @@ import React from 'react';
 import Header from '../components/Header';
 import LeftSideBar from '../components/LeftSideBar';
 import RightBody from '../components/RightBody';
-import {withRouter} from './util';
+import {withRouter, isAdmin} from './util';
 import RetroMarkDownDisplay from '../components/common/RetroMarkdownDisplay';
 import RetroButton from '../components/common/RetroButton';
 
@@ -40,6 +40,7 @@ class BlogPage extends React.Component {
     })
   }
   render() {
+    let hidden = !isAdmin()
     return (
       <div className='body'>
         <Header></Header>
@@ -47,8 +48,8 @@ class BlogPage extends React.Component {
         <div style={{maxWidth: "1920px", minWidth: "755px", margin: "0 auto"}}>
           <LeftSideBar></LeftSideBar>
           <RightBody>
-            <RetroButton warning style={{fontSize: "20px", margin: "5px"}} onClick={this.onEditButtonClick}>Edit Blog</RetroButton>
-            <RetroButton danger style={{fontSize: "20px", margin: "5px"}}>Delete Blog</RetroButton>
+            <RetroButton hidden={hidden} warning style={{fontSize: "20px", margin: "5px"}} onClick={this.onEditButtonClick}>Edit Blog</RetroButton>
+            <RetroButton hidden={hidden} danger style={{fontSize: "20px", margin: "5px"}}>Delete Blog</RetroButton>
 
             <div style={{fontSize: "30px"}}>{this.state.blog.title}</div>
             <div style={{fontSize: "15px", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis"}}>

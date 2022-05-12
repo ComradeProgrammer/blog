@@ -35,18 +35,15 @@ class LoginPage extends React.Component {
         userName: this.state.userName,
         password: this.state.password,
       })
-    }).then(res => {
-      if (res.ok) {
-        return res.json()
+    }).then(async resp => {
+      let res = await resp.json()
+      if (resp.ok) {
+        localStorage.setItem("user", JSON.stringify(res.user))
+        this.props.navigate(-1)
       } else {
-        this.setState({alertMsg: "invalid userName or password"})
+        this.setState({alertMsg: res.error})
         return
       }
-
-    }).then((res) => {
-      localStorage.setItem("user", JSON.stringify(res.user))
-      this.props.navigate(-1)
-
     }).catch(e => {
       //todo: handle err
       console.log(e)
@@ -64,8 +61,8 @@ class LoginPage extends React.Component {
         <Header></Header>
         <div style={{height: "80px"}}></div>{/* place holder for header */}
         <div style={{maxWidth: "1920px", minWidth: "755px", margin: "0 auto"}}>
-          <RetroCard style={{width: "500px", margin: "30px auto", height: "500px", display: "block"}}>
-            <div style={{margin: "150px", textAlign: "center"}}></div>
+          <RetroCard style={{width: "500px", margin: "30px auto", height: "300px", display: "block"}}>
+            <div style={{margin: "50px", textAlign: "center"}}></div>
             <div style={{margin: "0 auto", textAlign: "center"}}>Please log in if you want to proceed</div>
             {message}
             <div style={{margin: "20px auto", textAlign: "center"}}>

@@ -34,7 +34,7 @@ class LeftSideBar extends React.Component {
       )
     }
     return (
-      <RetroCard style={{width: "20%", height: "100px", verticalAlign: "top", textAlign: "center"}}>
+      <RetroCard style={{width: "20%", verticalAlign: "top", textAlign: "center"}}>
         All Blog categories<br />
         {categoryButtons}
       </RetroCard>

@@ -1,10 +1,10 @@
 import React from 'react';
-import {withRouter} from './util';
 import Header from '../components/Header';
 import LeftSideBar from '../components/LeftSideBar';
 import RightBody from '../components/RightBody';
 import BlogBriefCard from '../components/BlogBriefCard';
 import RetroButton from '../components/common/RetroButton';
+import {isAdmin, withRouter} from './util';
 
 class CategoryPage extends React.Component {
   constructor(props) {
@@ -13,6 +13,7 @@ class CategoryPage extends React.Component {
       category: []
     }
     this.onCreateBlogButtonClick = this.onCreateBlogButtonClick.bind(this)
+    this.onEditCategotyButtonClick = this.onEditCategotyButtonClick.bind(this)
   }
   componentDidMount() {
     this.fetchData()
@@ -40,6 +41,7 @@ class CategoryPage extends React.Component {
         blogItems.push((<BlogBriefCard blog={enhancedBlog} key={this.state.category.blogs[i].ID}></BlogBriefCard>))
       }
     }
+    let hidden = !isAdmin()
     return (
       <div className='body'>
         <Header></Header>
@@ -57,9 +59,9 @@ class CategoryPage extends React.Component {
             </div>
 
             <hr style={{border: "1px solid lightgreen"}} />
-            <RetroButton style={{fontSize: "20px", margin: "5px"}} onClick={this.onCreateBlogButtonClick}>Create Blog</RetroButton>
-            <RetroButton warning style={{fontSize: "20px", margin: "5px"}}>Edit Category</RetroButton>
-            <RetroButton danger style={{fontSize: "20px", margin: "5px"}}>Delete Category</RetroButton>
+            <RetroButton hidden={hidden} style={{fontSize: "20px", margin: "5px"}} onClick={this.onCreateBlogButtonClick}>Create Blog</RetroButton>
+            <RetroButton hidden={hidden} warning style={{fontSize: "20px", margin: "5px"}} onClick={this.onEditCategotyButtonClick}>Edit Category</RetroButton>
+            <RetroButton hidden={hidden} danger style={{fontSize: "20px", margin: "5px"}}>Delete Category</RetroButton>
 
             {blogItems}
           </RightBody>
@@ -70,6 +72,9 @@ class CategoryPage extends React.Component {
 
   onCreateBlogButtonClick() {
     this.props.navigate(`/createblog`)
+  }
+  onEditCategotyButtonClick() {
+    this.props.navigate(`/editcategory/${this.props.params.id}`)
   }
 }
 export default withRouter(CategoryPage)

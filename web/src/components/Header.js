@@ -58,7 +58,7 @@ class Header extends React.Component {
         <RetroButton style={{fontSize: "25px", width: "15%"}} >Resume/CV</RetroButton>
         <RetroButton style={{fontSize: "25px", width: "15%"}} onClick={this.onGithubButtonClick}>To Github</RetroButton>
 
-        <RetroButton style={{float: "right", height: "62px", minWidth: "62px",lineHeight: this.state.user == null ?"62px":"0",  textAlign: "center"}} onClick={this.onLoginButtonClick}>
+        <RetroButton style={{float: "right", height: "62px", minWidth: "62px",lineHeight: "62px",  textAlign: "center"}} onClick={this.onLoginButtonClick}>
           {this.state.user === null ? "Login" : this.state.user.userName+" Logout" } 
         </RetroButton>
       </div>
@@ -80,6 +80,9 @@ class Header extends React.Component {
   onLoginButtonClick(){
     if(this.state.user!==null){
       //todo: use logout api
+      fetch("/api/login",{
+        method: "DELETE",
+      })
       localStorage.removeItem("user")
       this.setState({user: null})
     }

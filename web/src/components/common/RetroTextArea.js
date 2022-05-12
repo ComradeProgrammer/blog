@@ -1,5 +1,11 @@
 import React from 'react';
 import "./RetroTextArea.css"
+/**
+ * props:
+ * style
+ * value (defaule value)
+ * onChange
+ */
 class RetroTextArea extends React.Component {
   constructor(props) {
     super(props);
@@ -36,10 +42,14 @@ class RetroTextArea extends React.Component {
     for (let key in nextProps.style) {
       newStyle[key] = nextProps.style[key]
     }
-    this.setState({style: newStyle, value: nextProps.value})
+    this.setState({style: newStyle})
+    if (nextProps.value) {
+      this.setState({value: nextProps.value})
+    }
   }
 
   onTextAreaChange(e) {
+    this.setState({value: e.target.value})
     if (this.props.onChange) {
       this.props.onChange(e)
     }

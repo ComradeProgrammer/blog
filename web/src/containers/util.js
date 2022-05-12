@@ -8,3 +8,20 @@ export function withRouter(Child) {
     return <Child {...props} navigate={navigate} location={location} params={params} key={location.pathname} />;
   }
 }
+
+
+export function isAdmin() {
+  let userRaw = localStorage.getItem("user")
+  if (!userRaw) {
+    return false
+  }
+  try {
+    let user = JSON.parse(localStorage.getItem("user"))
+    if (user?.isAdmin) {
+      return true
+    }
+
+  } catch (e) {
+  }
+  return false
+}
