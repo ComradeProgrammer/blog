@@ -11,6 +11,7 @@ class AllBlogsPage extends React.Component {
     this.state = {
       blogs: []
     }
+    this.onCreateBlogButtonClick = this.onCreateBlogButtonClick.bind(this)
   }
   componentDidMount() {
     this.fetchData()
@@ -42,12 +43,16 @@ class AllBlogsPage extends React.Component {
           <RightBody>
             <div style={{fontSize: "30px", width: "100%", textAlign: "center"}}>All blogs</div>
             <hr style={{border: "1px solid lightgreen"}} />
-            <RetroButton style={{fontSize: "20px",margin:"10px"}}>Create category</RetroButton>
+            <RetroButton style={{fontSize: "20px", margin: "10px"}}>Create category</RetroButton>
+            <RetroButton style={{fontSize: "20px", margin: "5px"}} onClick={this.onCreateBlogButtonClick}>Create Blog</RetroButton>
             {blogItems}
           </RightBody>
         </div>
       </div>
     )
+  }
+  onCreateBlogButtonClick() {
+    this.props.navigate(`/createblog`)
   }
 }
 export default withRouter(AllBlogsPage)

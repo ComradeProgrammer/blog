@@ -20,6 +20,7 @@ class RetroInput extends React.Component {
         display: "inline-block",
       },
       type: "text",
+      value: ""
     };
 
     if (props.password) {
@@ -32,19 +33,20 @@ class RetroInput extends React.Component {
     }
     this.onInputChange = this.onInputChange.bind(this)
   }
-  
+
   UNSAFE_componentWillReceiveProps(nextProps) {
     let newStyle = {...this.state.style}
     for (let key in nextProps.style) {
       newStyle[key] = nextProps.style[key]
     }
-    this.setState({style: newStyle})
+    console.log(nextProps.value)
+    this.setState({style: newStyle, value: nextProps.value})
   }
 
-  
+
   render() {
     return (
-      <input type={this.state.type} style={this.state.style} onChange={this.onInputChange} />
+      <input type={this.state.type} style={this.state.style} onChange={this.onInputChange} value={this.state.value} />
     )
   }
   onInputChange(e) {

@@ -12,6 +12,7 @@ class CategoryPage extends React.Component {
     this.state = {
       category: []
     }
+    this.onCreateBlogButtonClick = this.onCreateBlogButtonClick.bind(this)
   }
   componentDidMount() {
     this.fetchData()
@@ -56,15 +57,19 @@ class CategoryPage extends React.Component {
             </div>
 
             <hr style={{border: "1px solid lightgreen"}} />
-            <RetroButton  style={{fontSize: "20px",margin:"5px"}}>Create Blog</RetroButton>
-            <RetroButton warning style={{fontSize: "20px",margin:"5px"}}>Edit Category</RetroButton>
-            <RetroButton danger style={{fontSize: "20px",margin:"5px"}}>Delete Category</RetroButton>
+            <RetroButton style={{fontSize: "20px", margin: "5px"}} onClick={this.onCreateBlogButtonClick}>Create Blog</RetroButton>
+            <RetroButton warning style={{fontSize: "20px", margin: "5px"}}>Edit Category</RetroButton>
+            <RetroButton danger style={{fontSize: "20px", margin: "5px"}}>Delete Category</RetroButton>
 
             {blogItems}
           </RightBody>
         </div>
       </div>
     )
+  }
+
+  onCreateBlogButtonClick() {
+    this.props.navigate(`/createblog`)
   }
 }
 export default withRouter(CategoryPage)

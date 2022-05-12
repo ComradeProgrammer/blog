@@ -8,6 +8,7 @@ import CategoryPage from './containers/CategoryPage';
 import LoginPage from './containers/LoginPage';
 import EditCategory from './containers/EditCategory';
 import CreateBlogPage from './containers/CreateBlogPage';
+import EditBlogPage from './containers/EditBlogPage';
 
 class App extends React.Component {
   render() {
@@ -21,6 +22,8 @@ class App extends React.Component {
           <Route path="category/:id" element={<CategoryPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/createblog" element={<CreateBlogPage />} />
+          <Route path="/editblog/:id" element={<EditBlogPage />} />
+
           <Route path="/createcategory" element={<EditCategory />} />
         </Routes>
       </BrowserRouter>

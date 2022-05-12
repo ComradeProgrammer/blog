@@ -20,6 +20,7 @@ class RetroTextArea extends React.Component {
         display: "inline-block",
         scrollBarBaseColor: "green"
       },
+      value: ""
     };
 
 
@@ -35,7 +36,7 @@ class RetroTextArea extends React.Component {
     for (let key in nextProps.style) {
       newStyle[key] = nextProps.style[key]
     }
-    this.setState({style: newStyle})
+    this.setState({style: newStyle, value: nextProps.value})
   }
 
   onTextAreaChange(e) {
@@ -46,7 +47,7 @@ class RetroTextArea extends React.Component {
 
   render() {
     return (
-      <textarea style={this.state.style} onChange={this.onTextAreaChange} className="retrotextarea" />
+      <textarea style={this.state.style} onChange={this.onTextAreaChange} value={this.state.value} className="retrotextarea" />
     )
   }
 

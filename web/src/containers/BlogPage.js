@@ -20,7 +20,7 @@ class BlogPage extends React.Component {
       },
       id: null,
     }
-
+    this.onEditButtonClick = this.onEditButtonClick.bind(this)
   }
 
   componentDidMount() {
@@ -47,8 +47,8 @@ class BlogPage extends React.Component {
         <div style={{maxWidth: "1920px", minWidth: "755px", margin: "0 auto"}}>
           <LeftSideBar></LeftSideBar>
           <RightBody>
-            <RetroButton warning style={{fontSize: "20px",margin:"5px"}}>Edit Blog</RetroButton>
-            <RetroButton danger style={{fontSize: "20px",margin:"5px"}}>Delete Blog</RetroButton>
+            <RetroButton warning style={{fontSize: "20px", margin: "5px"}} onClick={this.onEditButtonClick}>Edit Blog</RetroButton>
+            <RetroButton danger style={{fontSize: "20px", margin: "5px"}}>Delete Blog</RetroButton>
 
             <div style={{fontSize: "30px"}}>{this.state.blog.title}</div>
             <div style={{fontSize: "15px", overflow: "hidden", whiteSpace: "nowrap", textOverflow: "ellipsis"}}>
@@ -60,13 +60,15 @@ class BlogPage extends React.Component {
             </div>
 
             <hr style={{border: "1px solid lightgreen"}} />
-
             <RetroMarkDownDisplay markdown={this.state.blog?.content}></RetroMarkDownDisplay>
-
           </RightBody>
         </div>
       </div>
     )
+  }
+
+  onEditButtonClick() {
+    this.props.navigate(`/editblog/${this.props.params.id}`)
   }
 }
 export default withRouter(BlogPage)

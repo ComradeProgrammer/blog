@@ -1,5 +1,10 @@
 import React from 'react';
-
+/**
+ * props:
+ * style
+ * data [{ID,name}]
+ * defaultID
+ */
 class RetroOption extends React.Component {
   constructor(props) {
     super(props);
@@ -14,7 +19,7 @@ class RetroOption extends React.Component {
     for (let key in props.style) {
       this.state.style[key] = props.style[key]
     }
-    this.onOptionChange=this.onOptionChange.bind(this)
+    this.onOptionChange = this.onOptionChange.bind(this)
   }
 
   UNSAFE_componentWillReceiveProps(nextProps) {
@@ -26,20 +31,24 @@ class RetroOption extends React.Component {
   }
 
 
-  render(){
-    let optionList=[]
-    for(let i=0;i<this.state?.data?.length;i++){
-      optionList.push((<option key={this.state.data[i].ID} value={this.state.data[i].ID}>{this.state.data[i].name}</option>))
+  render() {
+    let optionList = []
+    for (let i = 0; i < this.state?.data?.length; i++) {
+      if (this.state.data[i].ID === this.props.defaultID) {
+        optionList.push((<option selected key={this.state.data[i].ID} value={this.state.data[i].ID}>{this.state.data[i].name}</option>))
+      } else {
+        optionList.push((<option key={this.state.data[i].ID} value={this.state.data[i].ID}>{this.state.data[i].name}</option>))
+      }
     }
     return (
       <select style={this.state.style} onChange={this.onOptionChange}>
-         {optionList}
+        {optionList}
       </select>
     )
   }
 
-  onOptionChange(e){
-    if(this.props.onChange){
+  onOptionChange(e) {
+    if (this.props.onChange) {
       this.props.onChange(e)
     }
   }
