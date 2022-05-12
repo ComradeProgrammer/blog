@@ -23,6 +23,10 @@ class CategoryPage extends React.Component {
   fetchData() {
     let id = this.props.params.id
     fetch(`/api/category/${id}`).then(res => {
+      if(!res.ok){
+        window.alert("invalid blog")
+        this.props.navigate(-1)
+      }
       //todo: handle res code
       return res.json()
     }).then((res) => {

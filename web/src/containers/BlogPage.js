@@ -32,6 +32,10 @@ class BlogPage extends React.Component {
     let id = this.props.params.id
     fetch(`/api/blog/${id}`).then(res => {
       //todo: handle res code
+      if(!res.ok){
+        window.alert("invalid blog")
+        this.props.navigate(-1)
+      }
       return res.json()
     }).then((res) => {
       this.setState({blog: res})

@@ -1,9 +1,11 @@
 package controller
 
 import (
+
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
+	"github.com/gin-gonic/contrib/static"
 )
 
 func GetGinEngine() *gin.Engine {
@@ -11,6 +13,7 @@ func GetGinEngine() *gin.Engine {
 	store := cookie.NewStore([]byte("secret"))
 	r.Use(sessions.Sessions("session", store))
 
+	r.Use(static.Serve("/",static.LocalFile("web/build",true)))
 	//keep-alive handler
 	r.GET("/api/ping", Ping)
 

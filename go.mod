@@ -4,6 +4,7 @@ go 1.18
 
 require (
 	github.com/gin-contrib/sessions v0.0.5
+	github.com/gin-gonic/contrib v0.0.0-20201101042839-6a891bf89f19
 	github.com/gin-gonic/gin v1.7.7
 	github.com/smartystreets/goconvey v1.7.2
 	golang.org/x/crypto v0.0.0-20210220033148-5ea612d1eb83
