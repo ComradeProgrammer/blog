@@ -38,6 +38,6 @@ func GetGinEngine() *gin.Engine {
 	r.POST("/api/user", PostUser)
 	r.DELETE("/api/user/:id", DeleteUser)
 
-	r.PUT("/api/user/:id/password", PutUserPassword)
+	r.PUT("/api/user/:username/password", PutUserPassword)
 	return r
 }

@@ -10,6 +10,7 @@ import EditCategoryPage from './containers/EditCategoryPage';
 import CreateBlogPage from './containers/CreateBlogPage';
 import EditBlogPage from './containers/EditBlogPage';
 import CreateCategoryPage from './containers/CreateCategoryPage';
+import ChangePasswordPage from './containers/ChangePasswordPage';
 
 class App extends React.Component {
   render() {
@@ -22,6 +23,7 @@ class App extends React.Component {
           <Route path="blog/:id" element={<BlogPage />} />
           <Route path="category/:id" element={<CategoryPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/changepassword" element={<ChangePasswordPage/>} />
           <Route path="/createblog" element={<CreateBlogPage />} />
           <Route path="/editblog/:id" element={<EditBlogPage />} />
           <Route path="/createcategory" element={<CreateCategoryPage />} />

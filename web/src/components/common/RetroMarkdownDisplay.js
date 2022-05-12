@@ -1,5 +1,9 @@
 import React from 'react';
 import MarkDownIt from 'markdown-it'
+/**
+ * props:
+ * markdown: text in markdown
+ */
 class RetroMarkDownDisplay extends React.Component {
 
   render() {

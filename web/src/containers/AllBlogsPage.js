@@ -43,7 +43,7 @@ class AllBlogsPage extends React.Component {
         <div style={{maxWidth: "1920px", minWidth: "755px", margin: "0 auto"}}>
           <LeftSideBar></LeftSideBar>
           <RightBody>
-            <div style={{fontSize: "30px", width: "100%", textAlign: "center"}}>All blogs</div>
+            <div style={{fontSize: "30px", width: "100%", textAlign: "center"}}>All blogs({this.state.blogs.length})</div>
             <hr style={{border: "1px solid lightgreen"}} />
             <RetroButton hidden={hidden} style={{fontSize: "20px", margin: "10px"}} onClick={this.onCreateCategoryButtonClick}>Create category</RetroButton>
             <RetroButton hidden={hidden} style={{fontSize: "20px", margin: "5px"}} onClick={this.onCreateBlogButtonClick}>Create Blog</RetroButton>

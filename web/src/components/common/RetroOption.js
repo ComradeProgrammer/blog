@@ -4,6 +4,7 @@ import React from 'react';
  * style
  * data [{ID,name}]
  * defaultID
+ * onChange will return the ID(string); name will be shown as option
  */
 class RetroOption extends React.Component {
   constructor(props) {

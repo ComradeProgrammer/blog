@@ -129,19 +129,14 @@ func TestUserChangePassword(t *testing.T) {
 			"newPassword": "123456789",
 		}
 		data, _ := json.Marshal(payload)
-		req, _ := http.NewRequest("PUT", "/api/user/1/password", bytes.NewBuffer(data))
+		req, _ := http.NewRequest("PUT", "/api/user/admin/password", bytes.NewBuffer(data))
 		r.ServeHTTP(w, req)
 		So(w.Code, ShouldEqual, 200)
 
 		w = httptest.NewRecorder()
-		req, _ = http.NewRequest("GET", "/api/user/1", nil)
-		r.ServeHTTP(w, req)
-		So(w.Code, ShouldEqual, 200)
-		body, err := io.ReadAll(w.Body)
-		So(err, ShouldBeNil)
+		
 
-		var res model.User
-		err = json.Unmarshal(body, &res)
+		res,err:=model.GetUserByID(1)
 		So(err, ShouldBeNil)
 
 		So(res.UserName, ShouldEqual, "admin")

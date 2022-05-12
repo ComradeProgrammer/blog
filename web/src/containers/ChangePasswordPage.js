@@ -5,18 +5,20 @@ import Header from '../components/Header';
 import RetroCard from '../components/common/RetroCard';
 import RetroInput from '../components/common/RetroInput';
 import RetroButton from '../components/common/RetroButton';
-import {Link} from "react-router-dom";
-class LoginPage extends React.Component {
+
+class ChangePassword extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       userName: "",
       password: "",
+      newPassword: "",
       alertMsg: "",
     }
     this.onPasswordChange = this.onPasswordChange.bind(this)
     this.onUserNameChange = this.onUserNameChange.bind(this)
-    this.onLoginButtonClick = this.onLoginButtonClick.bind(this)
+    this.onConfirmButtonClick = this.onConfirmButtonClick.bind(this)
+    this.onNewPasswordChange = this.onNewPasswordChange.bind(this)
   }
 
   onUserNameChange(e) {
@@ -25,21 +27,32 @@ class LoginPage extends React.Component {
   onPasswordChange(e) {
     this.setState({password: e.target.value})
   }
+  onNewPasswordChange(e) {
+    this.setState({newPassword: e.target.value})
+  }
 
-  onLoginButtonClick() {
-    fetch("/api/login", {
-      method: "POST",
+  onConfirmButtonClick() {
+    if (this.state.userName === "") {
+      this.setState({alertMsg: "username must not be empty"})
+      return
+    }
+    if (this.state.newPassword === "") {
+      this.setState({alertMsg: "new password must not be empty"})
+      return
+    }
+    fetch(`/api/user/${this.state.userName}/password`, {
+      method: "PUT",
       headers: {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        userName: this.state.userName,
-        password: this.state.password,
+        oldPassword: this.state.password,
+        newPassword: this.state.newPassword,
       })
     }).then(async resp => {
       let res = await resp.json()
       if (resp.ok) {
-        localStorage.setItem("user", JSON.stringify(res.user))
+        window.alert("Operation succeeded")
         this.props.navigate(-1)
       } else {
         this.setState({alertMsg: res.error})
@@ -62,26 +75,31 @@ class LoginPage extends React.Component {
         <Header></Header>
         <div style={{height: "80px"}}></div>{/* place holder for header */}
         <div style={{maxWidth: "1920px", minWidth: "755px", margin: "0 auto"}}>
-          <RetroCard style={{width: "500px", margin: "30px auto", height: "300px", display: "block"}}>
+          <RetroCard style={{width: "500px", margin: "30px auto", display: "block"}}>
             <div style={{margin: "50px", textAlign: "center"}}></div>
             <div style={{margin: "0 auto", textAlign: "center"}}>Admin Login: Please log in if you want to proceed</div>
             {message}
             <div style={{margin: "20px auto", textAlign: "center"}}>
               <span style={{fontSize: "20px"}}>Email{'\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0'}</span>
-              {'\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0'}
+              {'\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0'}
               <RetroInput style={{fontSize: "20px"}} onChange={this.onUserNameChange} />
             </div>
 
             <div style={{margin: "20px auto", textAlign: "center"}}>
-              <span style={{fontSize: "20px"}}>Password</span>
-              {'\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0'}
+              <span style={{fontSize: "20px"}}>Old Password</span>
+
               <RetroInput password style={{fontSize: "20px"}} onChange={this.onPasswordChange} />
             </div>
 
-            <RetroButton style={{margin: "20px auto", textAlign: "center", width: "50%", display: "block"}} onClick={this.onLoginButtonClick}>Login</RetroButton>
+            <div style={{margin: "20px auto", textAlign: "center"}}>
+              <span style={{fontSize: "20px"}}>{'\u00a0'}New Password</span>
+
+              <RetroInput password style={{fontSize: "20px"}} onChange={this.onNewPasswordChange} />
+            </div>
+
+            <RetroButton style={{margin: "20px auto", textAlign: "center", width: "50%", display: "block"}} onClick={this.onConfirmButtonClick}>Confirm</RetroButton>
             {/* <RetroButton style={{margin:"20px auto",textAlign:"center",width:"50%",display:"block"}}>Register</RetroButton> */}
 
-            <Link to="/changepassword" style={{color: "lightgreen", float: "right"}}>Change Password</Link>
 
           </RetroCard>
         </div>
@@ -89,4 +107,4 @@ class LoginPage extends React.Component {
     )
   }
 }
-export default withRouter(LoginPage)
+export default withRouter(ChangePassword)

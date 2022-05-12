@@ -1,9 +1,9 @@
 import React from 'react';
 /**
  * props:
- * style
+ * style object
  * value (defaule value)
- * onChange
+ * onChange function
  */
 class RetroInput extends React.Component {
   constructor(props) {
@@ -25,7 +25,6 @@ class RetroInput extends React.Component {
         display: "inline-block",
       },
       type: "text",
-      value: ""
     };
 
     if (props.password) {
@@ -45,19 +44,16 @@ class RetroInput extends React.Component {
       newStyle[key] = nextProps.style[key]
     }
     this.setState({style: newStyle})
-    if (nextProps.value) {
-      this.setState({value: nextProps.value})
-    }
   }
 
 
   render() {
     return (
-      <input type={this.state.type} style={this.state.style} onChange={this.onInputChange} value={this.state.value} />
+      <input type={this.state.type} style={this.state.style} onChange={this.onInputChange} value={this.props.value} />
     )
   }
+
   onInputChange(e) {
-    this.setState({value:e.target.value})
     if (this.props.onChange) {
       this.props.onChange(e)
     }

@@ -115,10 +115,11 @@ func DeleteUser(c *gin.Context) {
 }
 
 func PutUserPassword(c *gin.Context) {
-	id, err := strconv.Atoi(c.Param("id"))
-	if err != nil {
+	username:= c.Param("username")
+
+	if username == "" {
 		c.JSON(400, gin.H{
-			"error": fmt.Sprintf("invalid parameter id: %s", c.Query("id")),
+			"error": fmt.Sprintf("empty username"),
 		})
 		return
 	}
@@ -154,7 +155,7 @@ func PutUserPassword(c *gin.Context) {
 			"error": "oldPassword field must not be empty",
 		})
 	}
-	user, err := model.GetUserByID(id)
+	user, err := model.GetUserByUserName(username)
 	if err != nil {
 		msg := err.Error()
 		if errors.Is(err, gorm.ErrRecordNotFound) {
