@@ -11,5 +11,5 @@ func main() {
 	log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds | log.Llongfile)
 	model.ConnectDatabase("database.sqlite")
 	model.InitDatabase()
-	controller.GetGinEngine().Run(":80")
+	controller.GetGinEngine().Run(":8080")
 }

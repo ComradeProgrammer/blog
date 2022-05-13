@@ -25,6 +25,7 @@ class Header extends React.Component {
     this.onBlogsButtonClick = this.onBlogsButtonClick.bind(this)
     this.onAboutMeButtonClick = this.onAboutMeButtonClick.bind(this)
     this.onLoginButtonClick=this.onLoginButtonClick.bind(this)
+    this.onResumeButtonClick=this.onResumeButtonClick.bind(this)
   }
 
   componentDidUpdate() {
@@ -55,7 +56,7 @@ class Header extends React.Component {
 
         <RetroButton style={{fontSize: "25px", width: "15%"}} onClick={this.onBlogsButtonClick}>Blogs </RetroButton>
         <RetroButton style={{fontSize: "25px", width: "15%"}} onClick={this.onAboutMeButtonClick}>About Me</RetroButton>
-        <RetroButton style={{fontSize: "25px", width: "15%"}} >Resume/CV</RetroButton>
+        <RetroButton style={{fontSize: "25px", width: "15%"}} onClick={this.onResumeButtonClick}>Resume</RetroButton>
         <RetroButton style={{fontSize: "25px", width: "15%"}} onClick={this.onGithubButtonClick}>To Github</RetroButton>
 
         <RetroButton style={{float: "right", height: "62px", minWidth: "62px",lineHeight: "62px",  textAlign: "center"}} onClick={this.onLoginButtonClick}>
@@ -72,7 +73,9 @@ class Header extends React.Component {
   onAboutMeButtonClick() {
     this.props.navigate("/aboutme")
   }
-
+  onResumeButtonClick() {
+    this.props.navigate("/resume")
+  }
   onGithubButtonClick() {
     window.location.href = "https://github.com/ComradeProgrammer"
   }

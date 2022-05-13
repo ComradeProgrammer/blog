@@ -7,20 +7,20 @@ import RightBody from '../components/RightBody';
 import {withRouter} from './util';
 
 
-class AboutMePage extends React.Component {
+class ResumePage extends React.Component {
   constructor(props) {
     super(props);
     this.state = {}
-    
   }
   componentDidMount() {
     //fetch the aboutme.md
-    fetch("/api/static/aboutme.md").then(res => {
+    fetch("/api/static/resume.md").then(res => {
       return res.text()
     }).then(res => {
       this.setState({aboutme: res})
     })
   }
+
   render() {
     return (
       <div className='body'>
@@ -37,4 +37,4 @@ class AboutMePage extends React.Component {
     )
   }
 }
-export default withRouter(AboutMePage)
+export default withRouter(ResumePage)
