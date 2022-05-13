@@ -7,6 +7,7 @@ require (
 	github.com/gin-gonic/contrib v0.0.0-20201101042839-6a891bf89f19
 	github.com/gin-gonic/gin v1.7.7
 	github.com/smartystreets/goconvey v1.7.2
+	github.com/unrolled/secure v1.10.0
 	golang.org/x/crypto v0.0.0-20210220033148-5ea612d1eb83
 	gorm.io/driver/sqlite v1.3.2
 	gorm.io/gorm v1.23.5

@@ -1,3 +1,7 @@
 *.db
 *.sqlite
 test.sh
+blog
+*.crt
+*.key
+*.out
