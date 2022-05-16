@@ -119,7 +119,7 @@ class EditBlogPage extends React.Component {
       body: JSON.stringify({
         title: this.state.title,
         content: this.state.content,
-        categoryID: this.state.categoryID,
+        categoryID: Number(this.state.categoryID),
         ID: this.props.ID,
       })
     })
