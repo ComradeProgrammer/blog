@@ -11,7 +11,8 @@ import (
 type User struct {
 	ID                int       `gorm:"id;primaryKey;autoIncrement"`
 	UserName          string    `gorm:"user_name;unique" json:"userName"`
-	PasswordEncrypted []byte    `gorm:"password_encrypted" json:"-"`
+	PasswordEncrypted []byte    `gorm:"password_encrypted" json:"-"` //used to store the password in database
+	Password          string    `gorm:"-" json:"password"`           //use to pass the password in body
 	IsAdmin           bool      `gorm:"is_admin" json:"isAdmin"`
 	CreateAt          time.Time `gorm:"create_at;autoCreateTime" json:"createAt"`
 	UpdateAt          time.Time `gorm:"update_at;autoUpdateTime" json:"updateAt"`

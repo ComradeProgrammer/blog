@@ -68,6 +68,17 @@ func PostUser(c *gin.Context) {
 		return
 	}
 
+	_, err = model.GetUserByUserName(user.UserName)
+	if err != gorm.ErrRecordNotFound {
+		c.JSON(400, gin.H{
+			"error": "User Has been Created",
+		})
+		return
+	}
+
+	password := user.Password
+	user.SetPassword(password)
+
 	err = model.CreateUser(&user)
 	if err != nil {
 		c.JSON(400, gin.H{
@@ -115,7 +126,7 @@ func DeleteUser(c *gin.Context) {
 }
 
 func PutUserPassword(c *gin.Context) {
-	username:= c.Param("username")
+	username := c.Param("username")
 
 	if username == "" {
 		c.JSON(400, gin.H{

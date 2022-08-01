@@ -6,6 +6,7 @@ import AboutMePage from './containers/AboutMePage';
 import BlogPage from './containers/BlogPage';
 import CategoryPage from './containers/CategoryPage';
 import LoginPage from './containers/LoginPage';
+import RegisterPage from './containers/RegisterPage';
 import EditCategoryPage from './containers/EditCategoryPage';
 import CreateBlogPage from './containers/CreateBlogPage';
 import EditBlogPage from './containers/EditBlogPage';
@@ -25,6 +26,7 @@ class App extends React.Component {
           <Route path="blog/:id" element={<BlogPage />} />
           <Route path="category/:id" element={<CategoryPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
           <Route path="/changepassword" element={<ChangePasswordPage />} />
           <Route path="/createblog" element={<CreateBlogPage />} />
           <Route path="/editblog/:id" element={<EditBlogPage />} />

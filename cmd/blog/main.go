@@ -10,14 +10,15 @@ import (
 )
 
 func main() {
-	gin.SetMode(gin.ReleaseMode)
+	//gin.SetMode(gin.ReleaseMode)
 	log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds | log.Llongfile)
 	model.ConnectDatabase("database.sqlite")
 	model.InitDatabase()
 	r:=controller.GetGinEngine()
-	//r.Run(":8080")
-	r.Use(TlsHandler())
-	r.RunTLS(":443","zhizhangertong.top.crt","zhizhangertong.top.key")
+
+	r.Run(":8080")
+	// r.Use(TlsHandler())
+	// r.RunTLS(":443","zhizhangertong.top.crt","zhizhangertong.top.key")
 }
 
 func TlsHandler() gin.HandlerFunc {
