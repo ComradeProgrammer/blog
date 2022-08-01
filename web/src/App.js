@@ -13,6 +13,7 @@ import EditBlogPage from './containers/EditBlogPage';
 import CreateCategoryPage from './containers/CreateCategoryPage';
 import ChangePasswordPage from './containers/ChangePasswordPage';
 import ResumePage from './containers/ResumePage';
+import UserPage from './containers/UserPage';
 
 class App extends React.Component {
   render() {
@@ -32,6 +33,7 @@ class App extends React.Component {
           <Route path="/editblog/:id" element={<EditBlogPage />} />
           <Route path="/createcategory" element={<CreateCategoryPage />} />
           <Route path="/editcategory/:id" element={<EditCategoryPage />} />
+          <Route path="/user" element={<UserPage />} />
         </Routes>
       </BrowserRouter>
     );

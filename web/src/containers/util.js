@@ -9,6 +9,18 @@ export function withRouter(Child) {
   }
 }
 
+export function getUser() {
+  let userRaw = localStorage.getItem("user")
+  if (!userRaw) {
+    return null
+  }
+  try {
+    let user = JSON.parse(localStorage.getItem("user"))
+    return user
+  } catch (e) {
+  }
+  return null
+}
 
 export function isAdmin() {
   let userRaw = localStorage.getItem("user")

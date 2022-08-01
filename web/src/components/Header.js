@@ -1,5 +1,6 @@
 import React from 'react';
 import Logo from "../assets/logo.png"
+import Profile from "../assets/profile_icon.jpeg"
 import {withRouter} from '../containers/util';
 import RetroButton from './common/RetroButton';
 
@@ -24,8 +25,8 @@ class Header extends React.Component {
     }
     this.onBlogsButtonClick = this.onBlogsButtonClick.bind(this)
     this.onAboutMeButtonClick = this.onAboutMeButtonClick.bind(this)
-    this.onLoginButtonClick=this.onLoginButtonClick.bind(this)
-    this.onResumeButtonClick=this.onResumeButtonClick.bind(this)
+    this.onLoginButtonClick = this.onLoginButtonClick.bind(this)
+    this.onResumeButtonClick = this.onResumeButtonClick.bind(this)
   }
 
   componentDidUpdate() {
@@ -59,8 +60,8 @@ class Header extends React.Component {
         <RetroButton style={{fontSize: "25px", width: "15%"}} onClick={this.onResumeButtonClick}>Resume</RetroButton>
         <RetroButton style={{fontSize: "25px", width: "15%"}} onClick={this.onGithubButtonClick}>To Github</RetroButton>
 
-        <RetroButton style={{float: "right", height: "62px", minWidth: "62px",lineHeight: "62px",  textAlign: "center"}} onClick={this.onLoginButtonClick}>
-          {this.state.user === null ? "Login" : this.state.user.userName+" Logout" } 
+        <RetroButton style={{float: "right", height: "62px", minWidth: "62px", lineHeight: "62px", textAlign: "center"}} onClick={this.onLoginButtonClick}>
+          {this.state.user === null ? "Login" : (<img style={{height: "60px", width: "60px", display: "inline-block"}} src={Profile} alt="" />)}
         </RetroButton>
       </div>
     );
@@ -80,16 +81,12 @@ class Header extends React.Component {
     window.location.href = "https://github.com/ComradeProgrammer"
   }
 
-  onLoginButtonClick(){
-    if(this.state.user!==null){
-      //todo: use logout api
-      fetch("/api/login",{
-        method: "DELETE",
-      })
-      localStorage.removeItem("user")
-      this.setState({user: null})
+  onLoginButtonClick() {
+    if (this.state.user !== null) {
+      this.props.navigate("/user")
+    } else {
+      this.props.navigate("/login")
     }
-    this.props.navigate("/login")
   }
 
 }

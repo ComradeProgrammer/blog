@@ -77,22 +77,22 @@ class ChangePassword extends React.Component {
         <div style={{maxWidth: "1920px", minWidth: "755px", margin: "0 auto"}}>
           <RetroCard style={{width: "500px", margin: "30px auto", display: "block"}}>
             <div style={{margin: "50px", textAlign: "center"}}></div>
-            <div style={{margin: "0 auto", textAlign: "center"}}>Admin Login: Please log in if you want to proceed</div>
+            <div style={{margin: "0 auto", textAlign: "center"}}>Change Password</div>
             {message}
             <div style={{margin: "20px auto", textAlign: "center"}}>
               <span style={{fontSize: "20px"}}>Email{'\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0'}</span>
-              {'\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0'}
+              {'\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0\u00a0'}
               <RetroInput style={{fontSize: "20px"}} onChange={this.onUserNameChange} />
             </div>
 
             <div style={{margin: "20px auto", textAlign: "center"}}>
-              <span style={{fontSize: "20px"}}>Old Password</span>
+              <span style={{fontSize: "20px"}}>Old Password{'\u00a0\u00a0\u00a0'}</span>
 
               <RetroInput password style={{fontSize: "20px"}} onChange={this.onPasswordChange} />
             </div>
 
             <div style={{margin: "20px auto", textAlign: "center"}}>
-              <span style={{fontSize: "20px"}}>{'\u00a0'}New Password</span>
+              <span style={{fontSize: "20px"}}>New Password{'\u00a0\u00a0'}</span>
 
               <RetroInput password style={{fontSize: "20px"}} onChange={this.onNewPasswordChange} />
             </div>
