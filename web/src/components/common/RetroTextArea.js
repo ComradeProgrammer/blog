@@ -52,7 +52,9 @@ class RetroTextArea extends React.Component {
 
   render() {
     return (
-      <textarea style={this.state.style} onChange={this.onTextAreaChange} value={this.props.value} className="retrotextarea" />
+      <textarea style={this.state.style} onChange={this.onTextAreaChange} value={this.props.value} className="retrotextarea" placeholder={this.props.placeholder} />
+
+      
     )
   }
 

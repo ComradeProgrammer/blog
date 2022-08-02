@@ -14,6 +14,7 @@ var WatchList = []any{
 	&Blog{},
 	&Category{},
 	&User{},
+	&Comment{},
 }
 
 func ConnectDatabase(databaseName string) {

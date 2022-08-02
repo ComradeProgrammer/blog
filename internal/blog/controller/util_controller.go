@@ -17,5 +17,17 @@ func authenticateAdmin(c *gin.Context) bool {
 		return false
 	}
 	return user.IsAdmin
+}
 
+func getUserFromSession(c *gin.Context) *model.User{
+	session := sessions.Default(c)
+	if session.Get("userID") == nil {
+		return nil
+	}
+	id := session.Get("userID").(int)
+	user, err := model.GetUserByID(id)
+	if err != nil {
+		return nil
+	}
+	return user
 }

@@ -38,6 +38,9 @@ func GetGinEngine() *gin.Engine {
 	r.PUT("/api/blog/:id", PutBlog)
 	r.DELETE("/api/blog/:id", DeleteBlog)
 
+	//comment handler
+	r.POST("/api/comment", PostComment)
+
 	//user controller
 	r.GET("/api/user", GetUsers)
 	r.GET("/api/user/:id", GetUser)

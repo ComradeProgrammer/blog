@@ -15,6 +15,8 @@ type Blog struct {
 
 	Category   *Category `gorm:"foreignKey:category_id;constraint:OnUpdate:RESTRICT,OnDelete:RESTRICT;" json:"category"`
 	CategoryID int       `gorm:"category_id" json:"categoryID"`
+
+	Comments *[]Comment `gorm:"foreignKey:blog_id" json:"comments"`
 }
 
 func GetBlogs() ([]*Blog, error) {
@@ -30,7 +32,10 @@ func GetBlog(ID int) (*Blog, error) {
 	blog := Blog{
 		ID: ID,
 	}
-	result := database.Preload("Category").First(&blog)
+	result := database.Preload("Category").Preload("Comments", func(db *gorm.DB) *gorm.DB {
+		return db.Preload("User").Order("comments.create_at desc")
+	}).First(&blog)
+
 	if result.Error != nil {
 		return nil, result.Error
 	}
