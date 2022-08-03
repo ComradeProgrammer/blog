@@ -14,6 +14,8 @@ import CreateCategoryPage from './containers/CreateCategoryPage';
 import ChangePasswordPage from './containers/ChangePasswordPage';
 import ResumePage from './containers/ResumePage';
 import UserPage from './containers/UserPage';
+import UserManagementPage from './containers/UserManagementPage';
+
 
 class App extends React.Component {
   render() {
@@ -34,6 +36,8 @@ class App extends React.Component {
           <Route path="/createcategory" element={<CreateCategoryPage />} />
           <Route path="/editcategory/:id" element={<EditCategoryPage />} />
           <Route path="/user" element={<UserPage />} />
+          <Route path="/usermanage" element={<UserManagementPage/>} />
+
         </Routes>
       </BrowserRouter>
     );

@@ -27,7 +27,6 @@ class UserPage extends React.Component {
 
   onChangePasswordButtonClick() {
     this.props.navigate("/changepassword")
-
   }
 
   render() {
@@ -49,6 +48,8 @@ class UserPage extends React.Component {
 
             <RetroButton warning style={{margin: "20px auto", textAlign: "center", width: "50%", display: "block"}} onClick={this.onLogoutButtonClick.bind(this)}>Log out</RetroButton>
             <RetroButton style={{margin: "20px auto", textAlign: "center", width: "50%", display: "block"}} onClick={this.onChangePasswordButtonClick.bind(this)}>Change Password</RetroButton>
+
+            <RetroButton style={{margin: "20px auto", textAlign: "center", width: "50%", display: "block"}} onClick={()=>{this.props.navigate("/usermanage")}}>UserList</RetroButton>
 
 
 

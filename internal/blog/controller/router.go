@@ -40,6 +40,7 @@ func GetGinEngine() *gin.Engine {
 
 	//comment handler
 	r.POST("/api/comment", PostComment)
+	r.DELETE("/api/comment/:id",DeleteComment)
 
 	//user controller
 	r.GET("/api/user", GetUsers)
