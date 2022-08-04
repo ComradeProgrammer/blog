@@ -87,6 +87,37 @@ class BlogPage extends React.Component {
     }
   }
 
+  onDeleteCommentClick(id) {
+    let result = window.confirm("Do you really want to delete this comment?")
+    if (result) {
+      fetch(`/api/comment/${id}`, {
+        method: "DELETE"
+      }).then(async res => {
+        if (res.ok) {
+          alert("Operation succeeded")
+          window.location.reload()
+        } else {
+          alert("Operation Failed")
+          let body = await res.json()
+          console.log(body)
+        }
+      }).catch(e => {
+        console.log(e)
+      })
+    }
+  }
+
+  showDeleteCommentButton(commentPosterID) {
+    let user = getUser()
+    if (user === null) {
+      return false
+    }
+    if (user.ID === commentPosterID || user.isAdmin) {
+      return true
+    }
+    return false
+  }
+
   render() {
     let hidden = !isAdmin()
     let comments = []
@@ -94,8 +125,14 @@ class BlogPage extends React.Component {
       let obj = (
         <RetroCard style={{width: "100%", margin: "5px auto", padding: "3px"}} key={this.state.blog.comments[i].ID}>
           {this.state.blog.comments[i].user.userName} Posted at {this.state.blog.comments[i].createAt}
+          {
+            this.showDeleteCommentButton ? (<RetroButton danger style={{margin: "5px"}} onClick={() => {this.onDeleteCommentClick(this.state.blog.comments[i].ID)}}>Delete Comment</RetroButton>) : null
+          }
+
+
           <hr style={{border: "1px solid lightgreen"}} />
-          {this.state.blog.comments[i].content}
+          <div style={{wordBreak: "normal", maxWidth: "100%"}}>{this.state.blog.comments[i].content}</div>
+
 
 
         </RetroCard>
@@ -140,7 +177,7 @@ class BlogPage extends React.Component {
                 (
                   <RetroCard style={{width: "100%", margin: "0 auto", display: "block"}}>
                     <div style={{fontSize: "20px"}}>Want to share your opinions? Please Log in</div>
-                    <div style={{width: "20%", textAlign: "center", margin:"5px auto",border: "1px solid lightgreen"}}>
+                    <div style={{width: "20%", textAlign: "center", margin: "5px auto", border: "1px solid lightgreen"}}>
                       <Link to="/login" style={{color: "lightgreen", margin: "0 auto"}}>Login</Link>
                     </div>
 

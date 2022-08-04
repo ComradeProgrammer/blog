@@ -12,7 +12,7 @@ class UserManagementPage extends React.Component {
     this.state = {
       users: [],
     }
-    this.onDeleteUserClick=this.onDeleteUserClick.bind(this)
+    this.onDeleteUserClick = this.onDeleteUserClick.bind(this)
   }
 
   componentDidMount() {
@@ -27,7 +27,7 @@ class UserManagementPage extends React.Component {
     })
   }
 
-  onDeleteUserClick(id){
+  onDeleteUserClick(id) {
     let result = window.confirm("Do you really want to delete this user?")
     if (result) {
       fetch(`/api/user/${id}`, {
@@ -70,7 +70,7 @@ class UserManagementPage extends React.Component {
           {
             admin ? (
               <th>
-                <RetroButton danger style={{margin: "5px"}} onClick={()=>{this.onDeleteUserClick(this.state.users[i].ID)}}>Delete User</RetroButton>
+                <RetroButton danger style={{margin: "5px"}} onClick={() => {this.onDeleteUserClick(this.state.users[i].ID)}}>Delete User</RetroButton>
               </th>
             ) : (<th></th>)
           }

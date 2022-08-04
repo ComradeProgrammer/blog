@@ -36,7 +36,7 @@ class App extends React.Component {
           <Route path="/createcategory" element={<CreateCategoryPage />} />
           <Route path="/editcategory/:id" element={<EditCategoryPage />} />
           <Route path="/user" element={<UserPage />} />
-          <Route path="/usermanage" element={<UserManagementPage/>} />
+          <Route path="/usermanage" element={<UserManagementPage />} />
 
         </Routes>
       </BrowserRouter>
