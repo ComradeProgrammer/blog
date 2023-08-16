@@ -14,7 +14,7 @@ type UserService interface {
 	PostUser(currentUser *model.User, newUser *model.User) (*model.User, error)
 	PutUser(currentUser *model.User, id int, newUser *model.User) error
 	DeleteUser(currentUser *model.User, id int) error
-	ChangePassword(currentUser *model.User, oldPassword string, newPassword string) error
+	ChangePassword(currentUser *model.User, username string, oldPassword string, newPassword string) error
 }
 
 type UserServiceImpl struct {
@@ -22,11 +22,11 @@ type UserServiceImpl struct {
 	db *gorm.DB
 }
 
-func NewUserServiceImpl(db *gorm.DB)( *UserServiceImpl,error) {
+func NewUserServiceImpl(db *gorm.DB) (*UserServiceImpl, error) {
 	return &UserServiceImpl{
 		ServiceBase: NewServiceBase(),
 		db:          db,
-	},nil
+	}, nil
 }
 
 func (u *UserServiceImpl) ListUsers(currentUser *model.User) (res []*model.User, err error) {
@@ -45,6 +45,12 @@ func (u *UserServiceImpl) GetUser(currentUser *model.User, id int) (res *model.U
 }
 func (u *UserServiceImpl) PostUser(currentUser *model.User, newUser *model.User) (*model.User, error) {
 	err := u.db.Transaction(func(tx *gorm.DB) error {
+		_, err := u.userDao.GetUserByUserName(tx, newUser.UserName)
+		if err != gorm.ErrRecordNotFound {
+			return fmt.Errorf("user has been created")
+		}
+		newUser.SetPassword(newUser.Password)
+
 		return u.userDao.CreateUser(tx, newUser)
 	})
 	return newUser, err
@@ -68,12 +74,13 @@ func (u *UserServiceImpl) PutUser(currentUser *model.User, id int, newUser *mode
 	})
 }
 
-
-func (u *UserServiceImpl) ChangePassword(currentUser *model.User, oldPassword string, newPassword string) error {
+func (u *UserServiceImpl) ChangePassword(currentUser *model.User, username string, oldPassword string, newPassword string) error {
 	if currentUser == nil {
 		return fmt.Errorf("changing password requires logging in")
 	}
-
+	if currentUser.UserName != username {
+		return fmt.Errorf("can only change password for yourself")
+	}
 	if ok := currentUser.VerifyPassword(oldPassword); !ok {
 		return fmt.Errorf("incorrect old password")
 	}

@@ -10,28 +10,34 @@ import (
 	"gorm.io/gorm"
 )
 
-func GetGinEngine(db *gorm.DB)( *gin.Engine,error ){
+func GetGinEngine(db *gorm.DB) (*gin.Engine, error) {
 	r := gin.Default()
 	store := cookie.NewStore([]byte("secret"))
 	r.Use(sessions.Sessions("session", store))
 	r.StaticFS("/api/static", http.Dir("static"))
-	r.Use(static.Serve("/",static.LocalFile("web/build",true)))
+	r.Use(static.Serve("/", static.LocalFile("web/build", true)))
 
-
-	pingController:=NewPingController()
-	blogController,err:=NewBlogController(db)
-	if err!=nil{
-		return nil,err
+	pingController := NewPingController()
+	blogController, err := NewBlogController(db)
+	if err != nil {
+		return nil, err
 	}
-	categoryController,err:=NewCategoryController(db)
-	if err!=nil{
-		return nil,err
+	categoryController, err := NewCategoryController(db)
+	if err != nil {
+		return nil, err
 	}
-	loginController,err:=NewLoginController(db)
-	if err!=nil{
-		return nil,err
+	loginController, err := NewLoginController(db)
+	if err != nil {
+		return nil, err
 	}
-
+	userController, err := NewUserController(db)
+	if err != nil {
+		return nil, err
+	}
+	commentController, err := NewCommentController(db)
+	if err != nil {
+		return nil, err
+	}
 
 	//keep-alive handler
 	r.GET("/api/ping", pingController.Ping)
@@ -55,15 +61,15 @@ func GetGinEngine(db *gorm.DB)( *gin.Engine,error ){
 	r.DELETE("/api/blog/:id", blogController.DeleteBlog)
 
 	//comment handler
-	// r.POST("/api/comment", PostComment)
-	// r.DELETE("/api/comment/:id",DeleteComment)
+	r.POST("/api/comment", commentController.PostComment)
+	r.DELETE("/api/comment/:id", commentController.DeleteComment)
 
 	//user controller
-	// r.GET("/api/user", GetUsers)
-	// r.GET("/api/user/:id", GetUser)
-	// r.POST("/api/user", PostUser)
-	// r.DELETE("/api/user/:id", DeleteUser)
+	r.GET("/api/user", userController.ListUsers)
+	r.GET("/api/user/:id", userController.GetUser)
+	r.POST("/api/user", userController.PostUser)
+	r.DELETE("/api/user/:id", userController.DeleteUser)
 
-	// r.PUT("/api/user/:username/password", PutUserPassword)
-	return r,nil
+	r.PUT("/api/user/:username/password", userController.PutUserPassword)
+	return r, nil
 }
