@@ -9,13 +9,16 @@ import (
 )
 
 /*
-	get category
-	create category
-		input description
-	create blog
-		title
-		markdownfile
-		categoryid
+get category
+create category
+
+	input description
+
+create blog
+
+	title
+	markdownfile
+	categoryid
 */
 func main() {
 	args := os.Args

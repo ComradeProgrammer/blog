@@ -84,5 +84,3 @@ func (l *LoginController) LogOut(c *gin.Context) {
 		"msg": "ok",
 	})
 }
-
-

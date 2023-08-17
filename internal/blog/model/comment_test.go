@@ -30,12 +30,12 @@ func TestCommentBasic(t *testing.T) {
 		var comment1 = Comment{
 			Content: "aaa",
 			BlogID:  blog.ID,
-			UserID: 1,
+			UserID:  1,
 		}
 		var comment2 = Comment{
 			Content: "bbb",
 			BlogID:  blog.ID,
-			UserID: 1,
+			UserID:  1,
 		}
 
 		err = CreateComment(&comment1)
@@ -62,7 +62,7 @@ func TestCommentBasic(t *testing.T) {
 		var comment3 = Comment{
 			Content: "bfbb",
 			BlogID:  1000000,
-			UserID: 1,
+			UserID:  1,
 		}
 		err = CreateComment(&comment3)
 		So(err, ShouldNotBeNil)

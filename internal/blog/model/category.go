@@ -16,7 +16,7 @@ type Category struct {
 	Blogs *[]Blog `gorm:"foreignKey:category_id" json:"blogs"`
 }
 
-//No preload blogs
+// No preload blogs
 func GetCategories() ([]*Category, error) {
 	var res []*Category
 	result := database.Order("create_at desc").Find(&res)
@@ -27,7 +27,7 @@ func GetCategories() ([]*Category, error) {
 
 }
 
-//blogs will be preloaded
+// blogs will be preloaded
 func GetCategory(ID int) (*Category, error) {
 	category := Category{
 		ID: ID,

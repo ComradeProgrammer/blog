@@ -152,7 +152,7 @@ func (u *UserController) DeleteUser(c *gin.Context) {
 	})
 }
 
-func (u *UserController) PutUserPassword(c *gin.Context){
+func (u *UserController) PutUserPassword(c *gin.Context) {
 	currentUser, err := u.BaseController.GetCurrentUserFromSession(c)
 	if err != nil {
 		c.JSON(500, gin.H{
@@ -165,7 +165,7 @@ func (u *UserController) PutUserPassword(c *gin.Context){
 
 	if username == "" {
 		c.JSON(400, gin.H{
-			"error":"empty username",
+			"error": "empty username",
 		})
 		return
 	}
@@ -201,7 +201,15 @@ func (u *UserController) PutUserPassword(c *gin.Context){
 		})
 	}
 
-	err=u.UserService.ChangePassword(currentUser,username,data["oldPassword"],data["newPassword"])
+	err = u.UserService.ChangePassword(currentUser, username, data["oldPassword"], data["newPassword"])
 
-
+	if err != nil {
+		c.JSON(400, gin.H{
+			"error": err.Error(),
+		})
+		return
+	}
+	c.JSON(200, gin.H{
+		"msg": "ok",
+	})
 }

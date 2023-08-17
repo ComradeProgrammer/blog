@@ -1,6 +1,7 @@
 package conn
 
 import (
+	"fmt"
 	"log"
 
 	"gorm.io/driver/sqlite"
@@ -40,6 +41,20 @@ func ConnectSqliteDatabase(databaseName string) (*gorm.DB, error) {
 
 		}
 	}
+
+	// if there is no admin, add an admin
+	user := model.User{}
+	result := database.Where("user_name = ?", "admin").First(&user)
+	if result.Error == gorm.ErrRecordNotFound {
+		adminUser := &model.User{
+			UserName: "admin",
+			IsAdmin:  true,
+		}
+		adminUser.SetPassword("123456")
+		result = database.Create(adminUser)
+		if result.Error != nil {
+			return nil, fmt.Errorf("unable to create admin account:%v ", err)
+		}
+	}
 	return database, nil
 }
-

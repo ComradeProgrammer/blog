@@ -14,8 +14,7 @@ func GetGinEngine() *gin.Engine {
 	store := cookie.NewStore([]byte("secret"))
 	r.Use(sessions.Sessions("session", store))
 	r.StaticFS("/api/static", http.Dir("static"))
-	r.Use(static.Serve("/",static.LocalFile("web/build",true)))
-
+	r.Use(static.Serve("/", static.LocalFile("web/build", true)))
 
 	//keep-alive handler
 	r.GET("/api/ping", Ping)
@@ -40,7 +39,7 @@ func GetGinEngine() *gin.Engine {
 
 	//comment handler
 	r.POST("/api/comment", PostComment)
-	r.DELETE("/api/comment/:id",DeleteComment)
+	r.DELETE("/api/comment/:id", DeleteComment)
 
 	//user controller
 	r.GET("/api/user", GetUsers)

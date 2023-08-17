@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	gin.SetMode(gin.ReleaseMode)
+	//gin.SetMode(gin.ReleaseMode)
 	log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds | log.Llongfile)
 	db, err := conn.ConnectSqliteDatabase("database.sqlite")
 	if err != nil {
@@ -21,9 +21,9 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	//r.Run(":8080")
-	r.Use(TlsHandler())
-	r.RunTLS(":443", "zhizhangertong.top.crt", "zhizhangertong.top.key")
+	r.Run(":8080")
+	// r.Use(TlsHandler())
+	// r.RunTLS(":443", "zhizhangertong.top.crt", "zhizhangertong.top.key")
 }
 
 func TlsHandler() gin.HandlerFunc {

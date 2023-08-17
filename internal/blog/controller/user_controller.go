@@ -106,7 +106,7 @@ func DeleteUser(c *gin.Context) {
 		})
 		return
 	}
-	if id==1{
+	if id == 1 {
 		c.JSON(400, gin.H{
 			"error": "you cannot delete initial user",
 		})

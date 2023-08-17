@@ -24,9 +24,9 @@ type SessionServiceImpl struct {
 }
 
 func (s *SessionServiceImpl) VerifyPassword(username string, password string) (ok bool, user *model.User) {
-
 	err := s.db.Transaction(func(tx *gorm.DB) error {
-		user, err := s.userDao.GetUserByUserName(tx, username)
+		var err error
+		user, err = s.userDao.GetUserByUserName(tx, username)
 		if err != nil {
 			return err
 		}

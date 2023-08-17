@@ -14,8 +14,6 @@ func GetGinEngine(db *gorm.DB) (*gin.Engine, error) {
 	r := gin.Default()
 	store := cookie.NewStore([]byte("secret"))
 	r.Use(sessions.Sessions("session", store))
-	r.StaticFS("/api/static", http.Dir("static"))
-	r.Use(static.Serve("/", static.LocalFile("web/build", true)))
 
 	pingController := NewPingController()
 	blogController, err := NewBlogController(db)
@@ -71,5 +69,11 @@ func GetGinEngine(db *gorm.DB) (*gin.Engine, error) {
 	r.DELETE("/api/user/:id", userController.DeleteUser)
 
 	r.PUT("/api/user/:username/password", userController.PutUserPassword)
+
+	r.StaticFS("/api/static", http.Dir("static"))
+	r.Use(static.Serve("/", static.LocalFile("web/build", true)))
+	r.NoRoute(func(c *gin.Context) {
+		c.File("web/build/index.html")
+	})
 	return r, nil
 }
