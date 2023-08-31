@@ -17,7 +17,9 @@ func main() {
 		panic(err)
 	}
 
-	r, err := controller.GetGinEngine(db)
+	conn.DB = db
+
+	r, err := controller.GetGinEngine()
 	if err != nil {
 		panic(err)
 	}

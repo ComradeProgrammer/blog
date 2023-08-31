@@ -6,16 +6,15 @@ import (
 
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
 type LoginController struct {
 	BaseController
 }
 
-func NewLoginController(db *gorm.DB) (*LoginController, error) {
+func NewLoginController() (*LoginController, error) {
 	var res LoginController
-	baseController, err := NewBaseController(db)
+	baseController, err := NewBaseController()
 	if err != nil {
 		return nil, err
 	}

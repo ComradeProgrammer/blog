@@ -10,6 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 
+	"github.com/ComradeProgrammer/blog/internal/myblog/dal/conn"
 	"github.com/ComradeProgrammer/blog/internal/myblog/dal/model"
 	"github.com/ComradeProgrammer/blog/internal/myblog/service"
 )
@@ -19,13 +20,13 @@ type BlogController struct {
 	service.BlogService
 }
 
-func NewBlogController(db *gorm.DB) (*BlogController, error) {
+func NewBlogController() (*BlogController, error) {
 	var res BlogController
-	baseController, err := NewBaseController(db)
+	baseController, err := NewBaseController()
 	if err != nil {
 		return nil, err
 	}
-	blogService, err := service.NewBlogServiceImpl(db)
+	blogService, err := service.NewBlogServiceImpl(conn.DB)
 	if err != nil {
 		return nil, err
 	}

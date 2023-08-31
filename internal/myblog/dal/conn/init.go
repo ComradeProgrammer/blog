@@ -11,6 +11,10 @@ import (
 	"github.com/ComradeProgrammer/blog/internal/myblog/dal/model"
 )
 
+var (
+	DB *gorm.DB
+)
+
 var WatchList = []interface{}{
 	&model.Blog{},
 	&model.Category{},

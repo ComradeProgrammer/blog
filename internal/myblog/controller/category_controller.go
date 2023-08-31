@@ -9,6 +9,7 @@ import (
 
 	"gorm.io/gorm"
 
+	"github.com/ComradeProgrammer/blog/internal/myblog/dal/conn"
 	"github.com/ComradeProgrammer/blog/internal/myblog/dal/model"
 	"github.com/ComradeProgrammer/blog/internal/myblog/service"
 	"github.com/gin-gonic/gin"
@@ -19,13 +20,13 @@ type CategoryController struct {
 	service.CategoryService
 }
 
-func NewCategoryController(db *gorm.DB) (*CategoryController, error) {
+func NewCategoryController() (*CategoryController, error) {
 	var res CategoryController
-	baseController, err := NewBaseController(db)
+	baseController, err := NewBaseController()
 	if err != nil {
 		return nil, err
 	}
-	CategoryService, err := service.NewCategoryServiceImpl(db)
+	CategoryService, err := service.NewCategoryServiceImpl(conn.DB)
 	if err != nil {
 		return nil, err
 	}

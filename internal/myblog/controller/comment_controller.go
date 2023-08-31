@@ -6,8 +6,7 @@ import (
 	"io"
 	"strconv"
 
-	"gorm.io/gorm"
-
+	"github.com/ComradeProgrammer/blog/internal/myblog/dal/conn"
 	"github.com/ComradeProgrammer/blog/internal/myblog/dal/model"
 	"github.com/ComradeProgrammer/blog/internal/myblog/service"
 	"github.com/gin-gonic/gin"
@@ -18,13 +17,13 @@ type CommentController struct {
 	service.CommentService
 }
 
-func NewCommentController(db *gorm.DB) (*CommentController, error) {
+func NewCommentController() (*CommentController, error) {
 	var res CommentController
-	baseController, err := NewBaseController(db)
+	baseController, err := NewBaseController()
 	if err != nil {
 		return nil, err
 	}
-	commentService, err := service.NewCommentServiceImpl(db)
+	commentService, err := service.NewCommentServiceImpl(conn.DB)
 	if err != nil {
 		return nil, err
 	}

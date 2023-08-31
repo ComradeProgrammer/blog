@@ -7,32 +7,31 @@ import (
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/contrib/static"
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
-func GetGinEngine(db *gorm.DB) (*gin.Engine, error) {
+func GetGinEngine() (*gin.Engine, error) {
 	r := gin.Default()
 	store := cookie.NewStore([]byte("secret"))
 	r.Use(sessions.Sessions("session", store))
 
 	pingController := NewPingController()
-	blogController, err := NewBlogController(db)
+	blogController, err := NewBlogController()
 	if err != nil {
 		return nil, err
 	}
-	categoryController, err := NewCategoryController(db)
+	categoryController, err := NewCategoryController()
 	if err != nil {
 		return nil, err
 	}
-	loginController, err := NewLoginController(db)
+	loginController, err := NewLoginController()
 	if err != nil {
 		return nil, err
 	}
-	userController, err := NewUserController(db)
+	userController, err := NewUserController()
 	if err != nil {
 		return nil, err
 	}
-	commentController, err := NewCommentController(db)
+	commentController, err := NewCommentController()
 	if err != nil {
 		return nil, err
 	}

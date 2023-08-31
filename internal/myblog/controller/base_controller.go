@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 
+	"github.com/ComradeProgrammer/blog/internal/myblog/dal/conn"
 	"github.com/ComradeProgrammer/blog/internal/myblog/dal/model"
 	"github.com/ComradeProgrammer/blog/internal/myblog/service"
 )
@@ -14,13 +15,13 @@ type BaseController struct {
 	service.SessionService
 }
 
-func NewBaseController(db *gorm.DB) (BaseController, error) {
-	sessionSvc, err := service.NewSessionService(db)
+func NewBaseController() (BaseController, error) {
+	sessionSvc, err := service.NewSessionService(conn.DB)
 	if err != nil {
 		return BaseController{}, err
 	}
 	return BaseController{
-		db:             db,
+		db:             conn.DB,
 		SessionService: sessionSvc,
 	}, nil
 }

@@ -7,10 +7,12 @@ import (
 	"io"
 	"strconv"
 
+	"gorm.io/gorm"
+
+	"github.com/ComradeProgrammer/blog/internal/myblog/dal/conn"
 	"github.com/ComradeProgrammer/blog/internal/myblog/dal/model"
 	"github.com/ComradeProgrammer/blog/internal/myblog/service"
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
 type UserController struct {
@@ -18,13 +20,13 @@ type UserController struct {
 	service.UserService
 }
 
-func NewUserController(db *gorm.DB) (*UserController, error) {
+func NewUserController() (*UserController, error) {
 	var res UserController
-	baseController, err := NewBaseController(db)
+	baseController, err := NewBaseController()
 	if err != nil {
 		return nil, err
 	}
-	userService, err := service.NewUserServiceImpl(db)
+	userService, err := service.NewUserServiceImpl(conn.DB)
 	if err != nil {
 		return nil, err
 	}
