@@ -4,3 +4,4 @@ test.sh
 *.crt
 *.key
 *.out
+.vscode

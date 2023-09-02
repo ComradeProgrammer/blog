@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"log"
 
 	"github.com/ComradeProgrammer/blog/internal/myblog/controller"
@@ -9,10 +10,16 @@ import (
 	"github.com/unrolled/secure"
 )
 
+var sqliteDatabase = flag.String("sqlitedb", "database.sqlite", "database file for the sqlite database")
+var sslCertPath = flag.String("ssl-cert", "", "ssl certification path")
+var sslKeyPath = flag.String("ssl-key", "", "ssl certification path")
+
 func main() {
+
+	flag.Parse()
 	//gin.SetMode(gin.ReleaseMode)
 	log.SetFlags(log.Ldate | log.Ltime | log.Lmicroseconds | log.Llongfile)
-	db, err := conn.ConnectSqliteDatabase("database.sqlite")
+	db, err := conn.ConnectSqliteDatabase(*sqliteDatabase)
 	if err != nil {
 		panic(err)
 	}
@@ -23,9 +30,12 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	r.Run(":8080")
-	// r.Use(TlsHandler())
-	// r.RunTLS(":443", "zhizhangertong.top.crt", "zhizhangertong.top.key")
+	if *sslCertPath == "" || *sslKeyPath == "" {
+		r.Run(":8080")
+	} else {
+		r.Use(TlsHandler())
+		r.RunTLS(":443", *sslCertPath, *sslKeyPath)
+	}
 }
 
 func TlsHandler() gin.HandlerFunc {
